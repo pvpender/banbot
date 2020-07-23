@@ -22,7 +22,7 @@ async def ban(msg: types.message):
         try:
             b = h[6:len(h)]
             a = a + int(b)
-            if int(b)<30 or int(b) >1314000:
+            if int(b)<32 or int(b) >1314000:
                 await msg.answer('Слишком маленький или слишком большой промежуток времени!')
             else:
                 await bot.kick_chat_member(msg.chat.id, msg.reply_to_message.from_user.id, until_date=a)
@@ -36,7 +36,7 @@ async def ban(msg: types.message):
 '''@dp.message_handler(is_chat_admin = False ,commands=['ban'])
 async def ban1(msg: types.message):
     a = time.time()
-    a = a + 30
+    a = a + 31
     await bot.restrict_chat_member(msg.chat.id, msg.reply_to_message.from_user.id, until_date=a,
                                    can_send_messages=False, can_send_media_messages=False,
                                    can_send_other_messages=False)
@@ -52,7 +52,7 @@ async def unban(msg: types.message):
 '''@dp.message_handler(is_chat_admin = False ,commands=['unban'])
 async def unban1(msg: types.message):
     a = time.time()
-    a = a + 30
+    a = a + 31
     await bot.restrict_chat_member(msg.chat.id, msg.reply_to_message.from_user.id, until_date=a,
                                    can_send_messages=False, can_send_media_messages=False,
                                    can_send_other_messages=False)
@@ -66,7 +66,7 @@ async def mute(msg: types.message):
         try:
             b = h[6:len(h)]
             a = a + int(b)
-            if int(b) < 30 or int(b) > 1314000:
+            if int(b) < 32 or int(b) > 1314000:
                 await msg.answer('Слишком маленький или слишком большой промежуток времени!')
             else:
                   await bot.restrict_chat_member(msg.chat.id, msg.reply_to_message.from_user.id, until_date=a, can_send_messages=False, can_send_media_messages=False,
