@@ -1,6 +1,8 @@
 from aiogram import Bot, Dispatcher, types, executor
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters import BoundFilter
+from aiogram.types import ContentTypes
+from aiogram.utils.markdown import hide_link, hlink
 import logging
 import time
 import os
@@ -33,9 +35,12 @@ dp.filters_factory.bind(CheckFilter)
 async def st(msg: types.message):
     await msg.answer('Я готов к работе!')
 
-@dp.message_handler(content_types=['new_char_member'])
+@dp.message_handler(content_types=ContentTypes.NEW_CHAT_MEMBERS )
 async def hello(msg: types.message):
-    await msg.answer('Hello')
+    user = f"https://t.me/{msg.new_chat_members[0].username}"
+    user1 = hlink(f"{msg.new_chat_members[0].username}", user)
+
+    await msg.answer(f"Добро пожаловать, {user1}!", disable_web_page_preview=True, parse_mode='HTML')
 
 @dp.message_handler(is_admin = True,commands=['ban'])
 async def ban(msg: types.message):
