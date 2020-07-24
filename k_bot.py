@@ -3,11 +3,12 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters import BoundFilter
 import logging
 import time
+import os
 
 
 logging.basicConfig(level=logging.INFO)
 storage = MemoryStorage()
-TOKEN = '1264365351:AAH38ocd1resSc_MyQyHLTNjlFUw3hbp4iI'
+TOKEN = os.environ.get('TOKEN')
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=storage)
 
