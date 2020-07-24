@@ -53,11 +53,6 @@ async def hello(msg: types.message):
 🐉{chat1}""", disable_web_page_preview=True, parse_mode='HTML')
 
 
-@dp.message_handler(commands=['setdeskr'])
-async def set(ch: types.chat):
-    chat1 = hlink("Чат Family GØT", "https://t.me/bsgot")
-    await ch.set_description(f"{chat1} fddfd")
-
 @dp.message_handler(is_admin = True,commands=['ban'])
 async def ban(msg: types.message):
     try:
