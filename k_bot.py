@@ -39,13 +39,18 @@ async def st(msg: types.message):
 async def hello(msg: types.message):
     user = f"https://t.me/{msg.new_chat_members[0].username}"
     user1 = hlink(f"{msg.new_chat_members[0].full_name}", user)
-    gip = hlink("Правила", "https://telegra.ph/Prpvila-G%C3%98T-Mafia-07-24")
-    await msg.answer(f"""🗡Приветствую, {user1}!
+    gip = hlink("правилами", "https://telegra.ph/Prpvila-G%C3%98T-Mafia-07-24")
+    chat = hlink("Ссылка на чат","https://t.me/mafgot")
+    chat1 = hlink("Чат Family GØT", "https://t.me/bsgot")
+    await msg.answer(f"""🗡Приветствую, {user1}️!
+
 🔫Ты попал в чат любителей игры
 Мафия,располагайся)
-‼️Перед началом игры,ознокомься с базовыми знаниями игры ,а также нашими правилами Игры,чата‼️
-{gip}
-🐉Чат Family GØT: @bsgot""", disable_web_page_preview=True, parse_mode='HTML')
+
+‼️Перед началом игры,ознокомься с базовыми знаниями игры,а  также нашими правилами {gip}‼️
+
+🔫{chat}
+🐉{chat1}""", disable_web_page_preview=True, parse_mode='HTML')
 
 @dp.message_handler(is_admin = True,commands=['ban'])
 async def ban(msg: types.message):
