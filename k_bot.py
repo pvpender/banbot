@@ -5,7 +5,6 @@ import logging
 import time
 import os
 
-
 logging.basicConfig(level=logging.INFO)
 storage = MemoryStorage()
 TOKEN = os.environ.get('TOKEN')
@@ -33,6 +32,10 @@ dp.filters_factory.bind(CheckFilter)
 @dp.message_handler(commands= ['start'])
 async def st(msg: types.message):
     await msg.answer('Я готов к работе!')
+
+@dp.message_handler(content_types=['new_char_member'])
+async def hello(msg: types.message):
+    await msg.answer('Hello')
 
 @dp.message_handler(is_admin = True,commands=['ban'])
 async def ban(msg: types.message):
