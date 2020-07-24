@@ -40,12 +40,12 @@ async def ban(msg: types.message):
         a = time.time()
         try:
             b = h[6:len(h)]
-            a = a + int(b)
-            if int(b)<30 or int(b) >1314000:
+            a = a + int(b)*60
+            if int(b)<1 or int(b) >525600:
                 await msg.answer('Слишком маленький или слишком большой промежуток времени!')
             else:
                 await bot.kick_chat_member(msg.chat.id, msg.reply_to_message.from_user.id, until_date=a)
-                await msg.answer(f"Пользователь @{msg.reply_to_message.from_user.username} забанен в группе на {b} секунд!")
+                await msg.answer(f"Пользователь @{msg.reply_to_message.from_user.username} забанен в группе на {b} минут!")
         except:
              await bot.kick_chat_member(msg.chat.id, msg.reply_to_message.from_user.id)
              await msg.answer(f"Пользователь @{msg.reply_to_message.from_user.username} забанен в группе навсегда!")
@@ -59,12 +59,12 @@ async def ban(msg: types.message):
         a = time.time()
         try:
             b = h[6:len(h)]
-            a = a + int(b)
-            if int(b)<30 or int(b) >1314000:
+            a = a + int(b)*60
+            if int(b)<1 or int(b) >525600:
                 await msg.answer('Слишком маленький или слишком большой промежуток времени!')
             else:
                 await bot.kick_chat_member(msg.chat.id, msg.reply_to_message.from_user.id, until_date=a)
-                await msg.answer(f"Пользователь @{msg.reply_to_message.from_user.username} забанен в группе на {b} секунд!")
+                await msg.answer(f"Пользователь @{msg.reply_to_message.from_user.username} забанен в группе на {b} минут!")
         except:
              await bot.kick_chat_member(msg.chat.id, msg.reply_to_message.from_user.id)
              await msg.answer(f"Пользователь @{msg.reply_to_message.from_user.username} забанен в группе навсегда!")
@@ -110,13 +110,13 @@ async def mute(msg: types.message):
         a = time.time()
         try:
             b = h[6:len(h)]
-            a = a + int(b)
-            if int(b) < 30 or int(b) > 1314000:
+            a = a + int(b) * 60
+            if int(b) < 1 or int(b) > 525600:
                 await msg.answer('Слишком маленький или слишком большой промежуток времени!')
             else:
                   await bot.restrict_chat_member(msg.chat.id, msg.reply_to_message.from_user.id, until_date=a, can_send_messages=False, can_send_media_messages=False,
                                                    can_send_other_messages=False)
-                  await msg.answer (f"Пользователю @{msg.reply_to_message.from_user.username} запрещено писать в группе на {int(b)} секунд!")
+                  await msg.answer (f"Пользователю @{msg.reply_to_message.from_user.username} запрещено писать в группе на {int(b)} минут!")
         except:
             await bot.restrict_chat_member(msg.chat.id, msg.reply_to_message.from_user.id, can_send_messages=False, can_send_media_messages=False,
                                            can_send_other_messages=False)
@@ -132,13 +132,13 @@ async def mute(msg: types.message):
         a = time.time()
         try:
             b = h[6:len(h)]
-            a = a + int(b)
-            if int(b) < 30 or int(b) > 1314000:
+            a = a + int(b) * 60
+            if int(b) < 1 or int(b) > 525600:
                 await msg.answer('Слишком маленький или слишком большой промежуток времени!')
             else:
                   await bot.restrict_chat_member(msg.chat.id, msg.reply_to_message.from_user.id, until_date=a, can_send_messages=False, can_send_media_messages=False,
                                                    can_send_other_messages=False)
-                  await msg.answer (f"Пользователю @{msg.reply_to_message.from_user.username} запрещено писать в группе на {int(b)} секунд!")
+                  await msg.answer (f"Пользователю @{msg.reply_to_message.from_user.username} запрещено писать в группе на {int(b)} минут!")
         except:
             await bot.restrict_chat_member(msg.chat.id, msg.reply_to_message.from_user.id, can_send_messages=False, can_send_media_messages=False,
                                            can_send_other_messages=False)
