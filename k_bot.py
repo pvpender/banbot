@@ -180,7 +180,7 @@ async def mute1(msg: types.message):
 async def unmute(msg: types.message):
     try:
          await bot.restrict_chat_member(msg.chat.id, msg.reply_to_message.from_user.id, can_send_messages=True, can_send_media_messages=True,
-                                        can_send_other_messages=True)
+                                        can_send_other_messages=True,  can_add_web_page_previews=True)
          await msg.answer('Пользователь размучен!')
     except:
         await msg.answer('Ответьте на сообщение пользователя, которого хотите размутить')
@@ -189,7 +189,7 @@ async def unmute(msg: types.message):
 async def unmute(msg: types.message):
     try:
          await bot.restrict_chat_member(msg.chat.id, msg.reply_to_message.from_user.id, can_send_messages=True, can_send_media_messages=True,
-                                        can_send_other_messages=True)
+                                        can_send_other_messages=True,  can_add_web_page_previews=True)
          await msg.answer('Пользователь размучен!')
     except:
         await msg.answer('Ответьте на сообщение пользователя, которого хотите размутить')
