@@ -59,7 +59,7 @@ async def ban(msg: types.message):
         a = time.time()
         try:
             b = h[6:len(h)]
-            a = a + int(b)*60
+            a = a + (int(b)*60)
             if int(b)<1 or int(b) >525600:
                 await msg.answer('Слишком маленький или слишком большой промежуток времени!')
             else:
@@ -78,7 +78,7 @@ async def ban(msg: types.message):
         a = time.time()
         try:
             b = h[6:len(h)]
-            a = a + int(b)*60
+            a = a + (int(b)*60)
             if int(b)<1 or int(b) >525600:
                 await msg.answer('Слишком маленький или слишком большой промежуток времени!')
             else:
@@ -129,7 +129,7 @@ async def mute(msg: types.message):
         a = time.time()
         try:
             b = h[6:len(h)]
-            a = a + int(b) * 60
+            a = a + (int(b) * 60)
             if int(b) < 1 or int(b) > 525600:
                 await msg.answer('Слишком маленький или слишком большой промежуток времени!')
             else:
@@ -151,7 +151,7 @@ async def mute(msg: types.message):
         a = time.time()
         try:
             b = h[6:len(h)]
-            a = a + int(b) * 60
+            a = a + (int(b) * 60)
             if int(b) < 1 or int(b) > 525600:
                 await msg.answer('Слишком маленький или слишком большой промежуток времени!')
             else:
