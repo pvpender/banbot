@@ -22,7 +22,7 @@ class CheckFilter(BoundFilter):
        return member.can_restrict_members == self.is_admin
 dp.filters_factory.bind(CheckFilter)
 
-class CheckFilter1(BoundFilter):
+class CheckFilter(BoundFilter):
     key = 'is_creator'
     def __init__(self, is_creator):
         self.is_creator = is_creator
@@ -32,19 +32,19 @@ class CheckFilter1(BoundFilter):
 dp.filters_factory.bind(CheckFilter)
 
 
-class CheckFilter2(BoundFilter):
-    key = 'is_chat_id'
-    def __init__(self, is_chat_id):
-        self.is_chat_id = is_chat_id
+class CheckFilter(BoundFilter):
+    key = 'is_chat_idd'
+    def __init__(self, is_chat_idd):
+        self.is_chat_idd = is_chat_idd
     async def check(self, message: types.Message):
-       return message.chat.id == self.is_chat_id
+       return message.chat.id == self.is_chat_idd
 dp.filters_factory.bind(CheckFilter)
 
 @dp.message_handler(commands= ['start'])
 async def st(msg: types.message):
     await msg.answer('Я готов к работе!')
 
-@dp.message_handler(is_chat_id='-1001490191998',content_types=ContentTypes.NEW_CHAT_MEMBERS)
+@dp.message_handler(is_chat_idd=-1001490191998, content_types=ContentTypes.NEW_CHAT_MEMBERS)
 async def hello(msg: types.message):
     user = f"https://t.me/{msg.new_chat_members[0].username}"
     user1 = hlink(f"{msg.new_chat_members[0].full_name}", user)
