@@ -9,7 +9,7 @@ import os
 
 logging.basicConfig(level=logging.INFO)
 storage = MemoryStorage()
-TOKEN = os.environ.get('TOKEN')
+TOKEN = '1264365351:AAH7v4e2OIU6CND7nW3J4jp0twoDapOVlWE'
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=storage)
 
