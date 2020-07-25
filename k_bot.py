@@ -32,19 +32,13 @@ class CheckFilter(BoundFilter):
 dp.filters_factory.bind(CheckFilter)
 
 
-class CheckFilter(BoundFilter):
-    key = 'chat_id'
-    def __init__(self, chat_id):
-        self.chat_id = chat_id
-    async def check(self, message: types.Message):
-       return message.chat.id == self.chat_id
-dp.filters_factory.bind(CheckFilter)
+
 
 @dp.message_handler(commands= ['start'])
 async def st(msg: types.message):
     await msg.answer('Я готов к работе!')
 
-@dp.message_handler(chat_id='-1001490191998',content_types=ContentTypes.NEW_CHAT_MEMBERS)
+@dp.message_handler(content_types=ContentTypes.NEW_CHAT_MEMBERS)
 async def hello(msg: types.message):
     user = f"https://t.me/{msg.new_chat_members[0].username}"
     user1 = hlink(f"{msg.new_chat_members[0].full_name}", user)
