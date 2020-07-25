@@ -35,7 +35,7 @@ dp.filters_factory.bind(CheckFilter)
 async def st(msg: types.message):
     await msg.answer('Я готов к работе!')
 
-@dp.message_handler(content_types=ContentTypes.NEW_CHAT_MEMBERS )
+@dp.message_handler(content_types=ContentTypes.NEW_CHAT_MEMBERS,chat_id='-1001490191998' )
 async def hello(msg: types.message):
     user = f"https://t.me/{msg.new_chat_members[0].username}"
     user1 = hlink(f"{msg.new_chat_members[0].full_name}", user)
