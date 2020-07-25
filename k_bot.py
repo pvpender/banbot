@@ -104,6 +104,7 @@ async def ban1(msg: types.message):
 async def unban(msg: types.message):
     try:
         await bot.unban_chat_member(msg.chat.id, msg.reply_to_message.from_user.id)
+        await msg.answer(f"Пользователь @{msg.reply_to_message.from_user.username} разбанен!")
     except:
         await msg.answer('Ответьте на сообщение пользователя, которого хотите разбанить')
 
@@ -111,6 +112,7 @@ async def unban(msg: types.message):
 async def unban(msg: types.message):
     try:
         await bot.unban_chat_member(msg.chat.id, msg.reply_to_message.from_user.id)
+        await msg.answer(f"Пользователь @{msg.reply_to_message.from_user.username} разбанен!")
     except:
         await msg.answer('Ответьте на сообщение пользователя, которого хотите разбанить')
 
