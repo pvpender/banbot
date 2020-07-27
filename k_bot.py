@@ -9,7 +9,7 @@ import os
 
 logging.basicConfig(level=logging.INFO)
 storage = MemoryStorage()
-TOKEN = os.environ.get('TOKEN')
+TOKEN = '1264365351:AAH7v4e2OIU6CND7nW3J4jp0twoDapOVlWE'
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=storage)
 
@@ -205,6 +205,11 @@ async def ban(msg: types.message):
     """)
 
 
+@dp.message_handler(is_chat_idd=-1001490191998, commands=['report'])
+async def report(msg: types.message):
+    await bot.send_message(898287979, text=' ')
+
+
 @dp.message_handler(commands=['help'])
 async def help(msg: types.message):
     await msg.answer("""
@@ -225,6 +230,9 @@ async def help(msg: types.message):
 async def nothing(msg: types.message):
     print('')
 
+@dp.message_handler(commands=['chatid'])
+async def get_chat_id(msg: types.message):
+    await msg.answer(msg.chat.id)
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
