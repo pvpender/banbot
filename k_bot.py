@@ -226,6 +226,7 @@ async def report(msg: types.message):
           await bot.send_message(-1001283141945, text=f"""Новая жалоба от @{msg.from_user.username}!
 Жалоба на сообщение пользователя: @{msg.reply_to_message.from_user.username}
 Текст сообщения: {msg.reply_to_message.text}
+Причина жалобы: {why}
 Ссылка на сообщение: {link}
 """, disable_web_page_preview=True)
     else:
