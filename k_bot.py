@@ -235,9 +235,9 @@ async def help(msg: types.message):
 /unmute - Размутить пользователя""")
 
 
-'''@dp.message_handler(commands=['chatid'])
+@dp.message_handler(commands=['chatid'])
 async def get_chat_id(msg: types.message):
-    await msg.answer(f"{msg.chat.id}")'''
+    await msg.answer(f"{msg.chat.id}")
 
 
 @dp.message_handler()
