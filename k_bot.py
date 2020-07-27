@@ -211,6 +211,7 @@ async def ban(msg: types.message):
 async def report(msg: types.message):
     if msg.reply_to_message:
           link = f"https://t.me/{msg.chat.username}/{msg.reply_to_message.message_id}"
+          await msg.answer('Жалоба на пользователя отправлена!')
           await bot.send_message(-1001389125426, text=f"""Новая жалоба от @{msg.from_user.username}!
 Жалоба на сообщение пользователя: @{msg.reply_to_message.from_user.username}
 Текст сообщения: {msg.reply_to_message.text}
