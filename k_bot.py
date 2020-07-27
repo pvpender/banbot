@@ -3,7 +3,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters import BoundFilter
 from aiogram.types import ContentTypes
 from aiogram.utils.markdown import hide_link, hlink
-from aiogram.contrib.middlewares.logging import LoggingMiddleware
+#from aiogram.contrib.middlewares.logging import LoggingMiddleware
 import logging
 import time
 import os
@@ -13,7 +13,7 @@ storage = MemoryStorage()
 TOKEN = os.environ.get('TOKEN')
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=storage)
-dp.middleware.setup(LoggingMiddleware())
+#dp.middleware.setup(LoggingMiddleware())
 
 
 class CheckFilter(BoundFilter):
