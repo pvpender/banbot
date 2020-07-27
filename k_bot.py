@@ -207,7 +207,7 @@ async def ban(msg: types.message):
     """)
 
 
-@dp.message_handler(is_message_idd=-1001490191998,commands=['report'])
+@dp.message_handler(is_chat_idd=-1001490191998, commands=['report'])
 async def report(msg: types.message):
     if msg.reply_to_message:
           link = f"https://t.me/{msg.chat.username}/{msg.reply_to_message.message_id}"
