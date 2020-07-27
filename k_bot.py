@@ -207,7 +207,7 @@ async def ban(msg: types.message):
     """)
 
 
-@dp.message_handler(is_message_idd=-1001490191998,commands=['report'])
+'''@dp.message_handler(is_message_idd=-1001490191998,commands=['report'])
 async def report(msg: types.message):
     if msg.reply_to_message:
           link = f"https://t.me/{msg.chat.username}/{msg.reply_to_message.message_id}"
@@ -217,7 +217,7 @@ async def report(msg: types.message):
 Ссылка на сообщение: {link}
 """, disable_web_page_preview=True)
     else:
-        await msg.answer('Ответьте на сообщение пользователя на которого хотите пожаловаться')
+        await msg.answer('Ответьте на сообщение пользователя на которого хотите пожаловаться')'''
 
 
 @dp.message_handler(commands=['help'])
@@ -235,9 +235,9 @@ async def help(msg: types.message):
 /unmute - Размутить пользователя""")
 
 
-@dp.message_handler(commands=['chatid'])
+'''@dp.message_handler(commands=['chatid'])
 async def get_chat_id(msg: types.message):
-    await msg.answer(f"{msg.chat.id}")
+    await msg.answer(f"{msg.chat.id}")'''
 
 
 @dp.message_handler()
