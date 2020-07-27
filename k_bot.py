@@ -210,11 +210,17 @@ async def ban(msg: types.message):
 @dp.message_handler(is_chat_idd=-1001490191998, commands=['report'])
 async def report(msg: types.message):
     if msg.reply_to_message:
+          text = msg.text
+          if len(text)>7:
+              why = text[7:len(text)]
+          else:
+              why = 'Причина не указана'
           link = f"https://t.me/{msg.chat.username}/{msg.reply_to_message.message_id}"
           await msg.answer('Жалоба на пользователя отправлена!')
           await bot.send_message(-1001389125426, text=f"""Новая жалоба от @{msg.from_user.username}!
 Жалоба на сообщение пользователя: @{msg.reply_to_message.from_user.username}
 Текст сообщения: {msg.reply_to_message.text}
+Причина жалобы: {why}
 Ссылка на сообщение: {link}
 """, disable_web_page_preview=True)
           await bot.send_message(-1001283141945, text=f"""Новая жалоба от @{msg.from_user.username}!
