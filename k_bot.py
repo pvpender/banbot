@@ -3,6 +3,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters import BoundFilter
 from aiogram.types import ContentTypes
 from aiogram.utils.markdown import hide_link, hlink
+from aiogram.contrib.middlewares.logging import LoggingMiddleware
 import logging
 import time
 import os
@@ -12,6 +13,7 @@ storage = MemoryStorage()
 TOKEN = os.environ.get('TOKEN')
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=storage)
+dp.middleware.setup(LoggingMiddleware())
 
 
 class CheckFilter(BoundFilter):
@@ -205,9 +207,17 @@ async def ban(msg: types.message):
     """)
 
 
-@dp.message_handler(is_chat_idd=-1001490191998, commands=['report'])
+@dp.message_handler(is_message_idd=-1001490191998,commands=['report'])
 async def report(msg: types.message):
-    await bot.send_message(898287979, text=' ')
+    if msg.reply_to_message:
+          link = f"https://t.me/{msg.chat.username}/{msg.reply_to_message.message_id}"
+          await bot.send_message(-1001389125426, text=f"""Новая жалоба от @{msg.from_user.username}!
+Жалоба на сообщение пользователя: @{msg.reply_to_message.from_user.username}
+Текст сообщения: {msg.reply_to_message.text}
+Ссылка на сообщение: {link}
+""", disable_web_page_preview=True)
+    else:
+        await msg.answer('Ответьте на сообщение пользователя на которого хотите пожаловаться')
 
 
 @dp.message_handler(commands=['help'])
@@ -225,14 +235,17 @@ async def help(msg: types.message):
 /unmute - Размутить пользователя""")
 
 
+@dp.message_handler(commands=['chatid'])
+async def get_chat_id(msg: types.message):
+    await msg.answer(f"{msg.chat.id}")
+
+
 @dp.message_handler()
 @dp.throttled(delite, rate=0.45)
 async def nothing(msg: types.message):
     print('')
 
-@dp.message_handler(commands=['chatid'])
-async def get_chat_id(msg: types.message):
-    await msg.answer(f"{msg.chat.id}")
+
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
