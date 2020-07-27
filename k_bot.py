@@ -77,6 +77,11 @@ async def hello(msg: types.message):
 🐉{chat1}""", disable_web_page_preview=True, parse_mode='HTML')
 
 
+async def delite(*args, **kwargs):
+    msg = args[0]
+    await msg.delete()
+
+
 @dp.message_handler(is_admin=True, commands=['ban'])
 async def ban(msg: types.message):
     try:
@@ -99,7 +104,7 @@ async def ban(msg: types.message):
 
 
 @dp.message_handler(is_admin=False, commands=['ban'])
-@dp.throttled(rate=2)
+@dp.throttled(delite, rate=2)
 async def ban(msg: types.message):
     await msg.answer('У тебя нет прав банить пользователей!')
 
@@ -114,7 +119,7 @@ async def unban(msg: types.message):
 
 
 @dp.message_handler(is_admin=False, commands=['unban'])
-@dp.throttled(rate=2)
+@dp.throttled(delite, rate=2)
 async def ban(msg: types.message):
     await msg.answer('У тебя нет прав разбанивать пользователей!')
 
@@ -146,7 +151,7 @@ async def mute(msg: types.message):
 
 
 @dp.message_handler(is_admin=False, commands=['mute'])
-@dp.throttled(rate=2)
+@dp.throttled(delite, rate=2)
 async def ban(msg: types.message):
     await msg.answer('У тебя нет прав мутить пользователей!')
 
@@ -164,7 +169,7 @@ async def unmute(msg: types.message):
 
 
 @dp.message_handler(is_admin=False, commands=['unmute'])
-@dp.throttled(rate=2)
+@dp.throttled(delite, rate=2)
 async def ban(msg: types.message):
     await msg.answer('У тебя нет прав размучивать пользователей!')
 
@@ -185,9 +190,7 @@ async def help(msg: types.message):
 /unmute - Размутить пользователя""")
 
 
-async def delite(*args, **kwargs):
-    msg = args[0]
-    await msg.delete()
+
 
 
 @dp.message_handler()
