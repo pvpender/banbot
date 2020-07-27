@@ -98,6 +98,12 @@ async def ban(msg: types.message):
         await msg.answer('Ответьте на сообщение пользователя, которого хотите забанить')
 
 
+@dp.message_handler(is_admin=False, commands=['ban'])
+@dp.throttled(rate=2)
+async def ban(msg: types.message):
+    await msg.answer('У тебя нет прав банить пользователей!')
+
+
 @dp.message_handler(is_admin=True, commands=['unban'])
 async def unban(msg: types.message):
     try:
@@ -105,6 +111,12 @@ async def unban(msg: types.message):
         await msg.answer(f"Пользователь @{msg.reply_to_message.from_user.username} разбанен!")
     except:
         await msg.answer('Ответьте на сообщение пользователя, которого хотите разбанить')
+
+
+@dp.message_handler(is_admin=False, commands=['unban'])
+@dp.throttled(rate=2)
+async def ban(msg: types.message):
+    await msg.answer('У тебя нет прав разбанивать пользователей!')
 
 
 @dp.message_handler(is_admin=True, commands=['mute'])
@@ -133,6 +145,13 @@ async def mute(msg: types.message):
         await msg.answer('Ответьте на сообщение пользователя, которого хотите замутить')
 
 
+@dp.message_handler(is_admin=False, commands=['mute'])
+@dp.throttled(rate=2)
+async def ban(msg: types.message):
+    await msg.answer('У тебя нет прав мутить пользователей!')
+
+
+
 @dp.message_handler(is_admin=True, commands=['unmute'])
 async def unmute(msg: types.message):
     try:
@@ -142,6 +161,13 @@ async def unmute(msg: types.message):
         await msg.answer('Пользователь размучен!')
     except:
         await msg.answer('Ответьте на сообщение пользователя, которого хотите размутить')
+
+
+@dp.message_handler(is_admin=False, commands=['unmute'])
+@dp.throttled(rate=2)
+async def ban(msg: types.message):
+    await msg.answer('У тебя нет прав размучивать пользователей!')
+
 
 
 @dp.message_handler(commands=['help'])
