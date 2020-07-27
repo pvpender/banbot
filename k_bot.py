@@ -232,7 +232,7 @@ async def nothing(msg: types.message):
 
 @dp.message_handler(commands=['chatid'])
 async def get_chat_id(msg: types.message):
-    await msg.answer(msg.chat.id)
+    await msg.answer(f"{msg.chat.id}")
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
