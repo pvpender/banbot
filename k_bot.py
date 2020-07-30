@@ -208,6 +208,7 @@ async def ban(msg: types.message):
 
 
 @dp.message_handler(is_chat_idd=-1001490191998, commands=['report'])
+@dp.throttled(delite, rate=60)
 async def report(msg: types.message):
     if msg.reply_to_message:
           text = msg.text
