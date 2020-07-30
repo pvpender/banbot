@@ -212,7 +212,7 @@ async def ban(msg: types.message):
 async def report(msg: types.message):
     if msg.from_user.id == 461987540:
           await msg.answer('Жалобы от тебя не принимаются!')
-    if msg.reply_to_message:
+    elif msg.reply_to_message:
           text = msg.text
           if len(text)>7:
               why = text[7:len(text)]
