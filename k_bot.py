@@ -66,13 +66,15 @@ async def hello(msg: types.message):
     user = f"https://t.me/{msg.new_chat_members[0].username}"
     user1 = hlink(f"{msg.new_chat_members[0].full_name}", user)
     gip = hlink("правилами", "https://telegra.ph/Prpvila-G%C3%98T-Mafia-07-24")
-    chat = hlink("Ссылка на чат", "https://t.me/mafgot")
-    chat1 = hlink("Чат Family GØT", "https://t.me/bsgot")
-    await msg.answer(f"""🗡Приветствую,игрок!
-🔫Ты попал в чат любителей игры
-Мафия,располагайся)
-‼Перед началом игры,прослушай советы от Госпожи: @mafgot2 ,а также ознакомься с нашими {gip} Игры/чата‼
-🐉{chat1}""", disable_web_page_preview=True, parse_mode='HTML')
+    chat = hlink("Правила игры/чата", "https://t.me/mafgot1")
+    chat1 = hlink("Роли и советы", "https://t.me/mafgot2")
+    await msg.answer(f"""    🔫GØT乡Mafia🔫
+    🔥Приветствую,игрок!🔥
+  ❗Обязательно ознакомься👇🏼❗
+        🎯{chat1}
+        ⚠️{chat2}
+  🎮Чтобы присоединиться дождись окончания 
+       катки➡️Присоединится➡️/Start""", disable_web_page_preview=True, parse_mode='HTML')
 
 
 async def delite(*args, **kwargs):
