@@ -3,7 +3,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters import BoundFilter
 from aiogram.types import ContentTypes
 from aiogram.utils.markdown import hide_link, hlink
-#from aiogram.contrib.middlewares.logging import LoggingMiddleware
+# from aiogram.contrib.middlewares.logging import LoggingMiddleware
 import logging
 import time
 import os
@@ -13,7 +13,9 @@ storage = MemoryStorage()
 TOKEN = os.environ.get('TOKEN')
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=storage)
-#dp.middleware.setup(LoggingMiddleware())
+
+
+# dp.middleware.setup(LoggingMiddleware())
 
 
 class CheckFilter(BoundFilter):
@@ -66,15 +68,17 @@ async def hello(msg: types.message):
     user = f"https://t.me/{msg.new_chat_members[0].username}"
     user1 = hlink(f"{msg.new_chat_members[0].full_name}", user)
     gip = hlink("правилами", "https://telegra.ph/Prpvila-G%C3%98T-Mafia-07-24")
-    chat = hlink("Правила игры/чата", "https://t.me/mafgot1")
-    chat1 = hlink("Роли и советы", "https://t.me/mafgot2")
-    await msg.answer(f"""
-🔫GØT乡Mafia🔫
-🔥Приветствую, {user1}!🔥
-❗Обязательно ознакомься👇🏼❗
-🎯{chat1}
-⚠️{chat}
-🎮Чтобы присоединиться дождись окончания катки➡️Присоединится➡️/Start""", disable_web_page_preview=True, parse_mode='HTML')
+    chat = hlink("Ссылка на чат", "https://t.me/mafgot")
+    chat1 = hlink("Чат Family GØT", "https://t.me/bsgot")
+    await msg.answer(f"""🗡Приветствую, {user1}️!
+
+🔫Ты попал в чат любителей игры
+Мафия,располагайся)
+
+‼️Перед началом игры,ознокомься с базовыми знаниями игры,а  также нашими правилами {gip}‼️
+
+🔫{chat}
+🐉{chat1}""", disable_web_page_preview=True, parse_mode='HTML')
 
 
 async def delite(*args, **kwargs):
@@ -90,7 +94,7 @@ async def ban(msg: types.message):
         try:
             b = h[5:len(h)]
             a = a + (int(b) * 60)
-            if int(b) < 1 or int(b) > 525600:
+            if int(b) < 1 or int(b) > 525600 and msg.reply_to_message.from_user.id != 898287979:
                 await msg.answer('Слишком маленький или слишком большой промежуток времени!')
             else:
                 await bot.kick_chat_member(msg.chat.id, msg.reply_to_message.from_user.id, until_date=a)
@@ -148,7 +152,7 @@ async def mute(msg: types.message):
         try:
             b = h[6:len(h)]
             a = a + (int(b) * 60)
-            if int(b) < 1 or int(b) > 525600:
+            if int(b) < 1 or int(b) > 525600 and msg.reply_to_message.from_user.id != 898287979:
                 await msg.answer('Слишком маленький или слишком большой промежуток времени!')
             else:
                 await bot.restrict_chat_member(msg.chat.id, msg.reply_to_message.from_user.id, until_date=a,
@@ -206,23 +210,22 @@ async def ban(msg: types.message):
 
 
 @dp.message_handler(is_chat_idd=-1001490191998, commands=['report'])
-@dp.throttled(delite, rate=60)
 async def report(msg: types.message):
     if msg.reply_to_message:
-          text = msg.text
-          if len(text)>7:
-              why = text[7:len(text)]
-          else:
-              why = 'Причина не указана'
-          link = f"https://t.me/{msg.chat.username}/{msg.reply_to_message.message_id}"
-          await msg.answer('Жалоба на пользователя отправлена!')
-          await bot.send_message(-1001389125426, text=f"""Новая жалоба от @{msg.from_user.username}!
+        text = msg.text
+        if len(text) > 7:
+            why = text[7:len(text)]
+        else:
+            why = 'Причина не указана'
+        link = f"https://t.me/{msg.chat.username}/{msg.reply_to_message.message_id}"
+        await msg.answer('Жалоба на пользователя отправлена!')
+        await bot.send_message(-1001389125426, text=f"""Новая жалоба от @{msg.from_user.username}!
 Жалоба на сообщение пользователя: @{msg.reply_to_message.from_user.username}
 Текст сообщения: {msg.reply_to_message.text}
 Причина жалобы: {why}
 Ссылка на сообщение: {link}
 """, disable_web_page_preview=True)
-          await bot.send_message(-1001283141945, text=f"""Новая жалоба от @{msg.from_user.username}!
+        await bot.send_message(-1001283141945, text=f"""Новая жалоба от @{msg.from_user.username}!
 Жалоба на сообщение пользователя: @{msg.reply_to_message.from_user.username}
 Текст сообщения: {msg.reply_to_message.text}
 Причина жалобы: {why}
