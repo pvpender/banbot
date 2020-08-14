@@ -3,7 +3,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters import BoundFilter
 from aiogram.types import ContentTypes
 from aiogram.utils.markdown import hide_link, hlink
-#from aiogram.contrib.middlewares.logging import LoggingMiddleware
+# from aiogram.contrib.middlewares.logging import LoggingMiddleware
 import logging
 import time
 import os
@@ -15,7 +15,7 @@ bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=storage)
 
 
-#dp.middleware.setup(LoggingMiddleware())
+# dp.middleware.setup(LoggingMiddleware())
 
 
 class CheckFilter(BoundFilter):
@@ -26,7 +26,8 @@ class CheckFilter(BoundFilter):
 
     async def check(self, message: types.Message):
         member = await bot.get_chat_member(message.chat.id, message.from_user.id)
-        return (member.can_restrict_members == self.is_admin) or (member.status == 'creator')
+        return ((member.can_restrict_members == self.is_admin) or (member.status == 'creator')) and \
+               (member.is_chat_admin() is True or member.is_chat_admin() is None)
 
 
 dp.filters_factory.bind(CheckFilter)
@@ -94,7 +95,7 @@ async def ban(msg: types.message):
         try:
             b = h[5:len(h)]
             a = a + (int(b) * 60)
-            if int(b) < 1 or int(b) > 525600 :
+            if int(b) < 1 or int(b) > 525600:
                 await msg.answer('Слишком маленький или слишком большой промежуток времени!')
             elif msg.reply_to_message.from_user.id != 898287979:
                 await bot.kick_chat_member(msg.chat.id, msg.reply_to_message.from_user.id, until_date=a)
@@ -152,7 +153,7 @@ async def mute(msg: types.message):
         try:
             b = h[6:len(h)]
             a = a + (int(b) * 60)
-            if int(b) < 1 or int(b) > 525600 :
+            if int(b) < 1 or int(b) > 525600:
                 await msg.answer('Слишком маленький или слишком большой промежуток времени!')
             elif msg.reply_to_message.from_user.id != 898287979:
                 await bot.restrict_chat_member(msg.chat.id, msg.reply_to_message.from_user.id, until_date=a,
