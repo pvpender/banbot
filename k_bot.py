@@ -86,7 +86,8 @@ async def hello(msg: types.message):
 async def hello(msg: types.message):
     user = f"https://t.me/{msg.new_chat_members[0].username}"
     user1 = hlink(f"{msg.new_chat_members[0].full_name}", user)
-    await msg.answer(f"""🗡Приветствую, {user1}️! Добро пожаловать!""", disable_web_page_preview=True, parse_mode='HTML')
+    await msg.answer(f"""🗡Приветствую, {user1}️!
+Добро пожаловать!""", disable_web_page_preview=True, parse_mode='HTML')
 
 
 async def delite(*args, **kwargs):
