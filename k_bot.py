@@ -267,6 +267,8 @@ async def help(msg: types.message):
 @dp.message_handler(commands=['chatid'])
 async def get_chat_id(msg: types.message):
     await msg.answer(f"{msg.chat.id}")
+    member = await bot.get_chat_member(message.chat.id, message.from_user.id)
+    await msg.answrr(member.status)
 
 
 @dp.message_handler()
