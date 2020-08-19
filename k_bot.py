@@ -26,10 +26,7 @@ class CheckFilter(BoundFilter):
 
     async def check(self, message: types.Message):
         member = await bot.get_chat_member(message.chat.id, message.from_user.id)
-        if member.status != "member":
-            return (member.can_restrict_members == self.is_admin) or (member.status == 'creator')
-        else:
-            return False
+        return (member.can_restrict_members == self.is_admin) or (member.status == 'creator')
 
 
 dp.filters_factory.bind(CheckFilter)
@@ -156,6 +153,13 @@ async def ban(msg: types.message):
     await msg.answer('У тебя нет прав разбанивать пользователей!')
 
 
+@dp.message_handler(commands=['unban'])
+@dp.throttled(delite, rate=2)
+async def ban(msg: types.message):
+    await msg.answer('У тебя нет прав разбанивать пользователей!')
+
+
+
 @dp.message_handler(lambda m: m.chat.type == 'private', commands=['unban'])
 async def ban(msg: types.message):
     await msg.answer("""Эту команду нужно использовать в супергруппе!
@@ -196,6 +200,13 @@ async def ban(msg: types.message):
     await msg.answer('У тебя нет прав мутить пользователей!')
 
 
+@dp.message_handler(commands=['mute'])
+@dp.throttled(delite, rate=2)
+async def ban(msg: types.message):
+    await msg.answer('У тебя нет прав мутить пользователей!')
+
+
+
 @dp.message_handler(lambda m: m.chat.type == 'private', commands=['mute'])
 async def ban(msg: types.message):
     await msg.answer("""Эту команду нужно использовать в супергруппе!
@@ -219,6 +230,13 @@ async def unmute(msg: types.message):
 @dp.throttled(delite, rate=2)
 async def ban(msg: types.message):
     await msg.answer('У тебя нет прав размучивать пользователей!')
+
+
+@dp.message_handler(commands=['unmute'])
+@dp.throttled(delite, rate=2)
+async def ban(msg: types.message):
+    await msg.answer('У тебя нет прав размучивать пользователей!')
+
 
 
 @dp.message_handler(lambda m: m.chat.type == 'private', commands=['unmute'])
