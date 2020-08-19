@@ -133,8 +133,11 @@ async def ban(msg: types.message):
 @dp.message_handler(is_admin=True, commands=['unban'])
 async def unban(msg: types.message):
     try:
-        await bot.unban_chat_member(msg.chat.id, msg.reply_to_message.from_user.id)
-        await msg.answer(f"Пользователь @{msg.reply_to_message.from_user.username} разбанен!")
+        if msg.reply_to_message.from_user.id != 1264365351:
+            await bot.unban_chat_member(msg.chat.id, msg.reply_to_message.from_user.id)
+            await msg.answer(f"Пользователь @{msg.reply_to_message.from_user.username} разбанен!")
+        else:
+            await msg.answer("Как я разбаню сам себя?")
     except:
         await msg.answer('Ответьте на сообщение пользователя, которого хотите разбанить')
 
