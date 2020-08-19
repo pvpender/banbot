@@ -124,6 +124,12 @@ async def ban(msg: types.message):
     await msg.answer('У тебя нет прав банить пользователей!')
 
 
+@dp.message_handler(commands=['ban'])
+@dp.throttled(delite, rate=2)
+async def ban(msg: types.message):
+    await msg.answer('У тебя нет прав банить пользователей!')
+
+
 @dp.message_handler(lambda m: m.chat.type == 'private', commands=['ban'])
 async def ban(msg: types.message):
     await msg.answer("""Эту команду нужно использовать в супергруппе!
