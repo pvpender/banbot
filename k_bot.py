@@ -26,8 +26,10 @@ class CheckFilter(BoundFilter):
 
     async def check(self, message: types.Message):
         member = await bot.get_chat_member(message.chat.id, message.from_user.id)
-        return ((member.can_restrict_members == self.is_admin) or (member.status == 'creator')) and \
-               (member.is_chat_admin() is True or member.is_chat_admin() is None)
+        if member.can_resgrict_members != None:
+            return (member.can_restrict_members == self.is_admin) or (member.status == 'creator')
+        else:
+            return False
 
 
 dp.filters_factory.bind(CheckFilter)
