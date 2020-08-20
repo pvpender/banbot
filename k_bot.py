@@ -277,5 +277,11 @@ async def nothing(msg: types.message):
     print('')
 
 
+@dp.message_handler(content_types='sticker')
+@dp.throttled(delite, rate=2)
+async def nothing(msg: types.message):
+    print('')
+
+
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
