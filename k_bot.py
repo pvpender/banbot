@@ -58,6 +58,23 @@ class CheckFilter(BoundFilter):
 dp.filters_factory.bind(CheckFilter)
 
 
+class CheckFilter(BoundFilter):
+    key = 'is_forward'
+
+    def __init__(self, is_forward):
+        self.is_forward = is_forward
+
+    async def check(self, message: types.Message):
+        try:
+            return message.forward_from
+        except:
+            return False
+
+
+dp.filters_factory.bind(CheckFilter)
+
+
+
 @dp.message_handler(commands=['start'])
 async def st(msg: types.message):
     await msg.answer('Я готов к работе!')
@@ -271,7 +288,7 @@ async def get_chat_id(msg: types.message):
     
 
 
-@dp.message_handler()
+@dp.message_handler(is_forward=False)
 @dp.throttled(delite, rate=0.45)
 async def nothing(msg: types.message):
     print('')
