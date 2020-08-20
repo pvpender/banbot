@@ -161,20 +161,19 @@ async def unban(msg: types.message):
         await msg.answer('Ответьте на сообщение пользователя, которого хотите разбанить')
 
 
-
-@dp.message_handler(commands=['unban'])
-@dp.throttled(delite, rate=2)
-async def ban(msg: types.message):
-    await msg.answer('У тебя нет прав разбанивать пользователей!')
-
-
-
 @dp.message_handler(lambda m: m.chat.type == 'private', commands=['unban'])
 async def ban(msg: types.message):
     await msg.answer("""Эту команду нужно использовать в супергруппе!
 Для этого добавте этого бота в вашу группу и дайте ему полные права администратора
 Помните, что пользоваться этой командой могут только администраторы, с возможностью банить пользователя, и сам создатель группы!
     """)
+
+
+
+@dp.message_handler(commands=['unban'])
+@dp.throttled(delite, rate=2)
+async def ban(msg: types.message):
+    await msg.answer('У тебя нет прав разбанивать пользователей!')
 
 
 @dp.message_handler(is_admin=True, commands=['mute'])
@@ -203,19 +202,19 @@ async def mute(msg: types.message):
         await msg.answer('Ответьте на сообщение пользователя, которого хотите замутить')
 
 
-@dp.message_handler(commands=['mute'])
-@dp.throttled(delite, rate=2)
-async def ban(msg: types.message):
-    await msg.answer('У тебя нет прав мутить пользователей!')
-
-
-
 @dp.message_handler(lambda m: m.chat.type == 'private', commands=['mute'])
 async def ban(msg: types.message):
     await msg.answer("""Эту команду нужно использовать в супергруппе!
 Для этого добавте этого бота в вашу группу и дайте ему полные права администратора
 Помните, что пользоваться этой командой могут только администраторы, с возможностью банить пользователя, и сам создатель группы!
     """)
+
+
+
+@dp.message_handler(commands=['mute'])
+@dp.throttled(delite, rate=2)
+async def ban(msg: types.message):
+    await msg.answer('У тебя нет прав мутить пользователей!')
 
 
 @dp.message_handler(is_admin=True, commands=['unmute'])
@@ -229,19 +228,18 @@ async def unmute(msg: types.message):
         await msg.answer('Ответьте на сообщение пользователя, которого хотите размутить')
 
 
-@dp.message_handler(commands=['unmute'])
-@dp.throttled(delite, rate=2)
-async def ban(msg: types.message):
-    await msg.answer('У тебя нет прав размучивать пользователей!')
-
-
-
 @dp.message_handler(lambda m: m.chat.type == 'private', commands=['unmute'])
 async def ban(msg: types.message):
     await msg.answer("""Эту команду нужно использовать в супергруппе!
 Для этого добавте этого бота в вашу группу и дайте ему полные права администратора
 Помните, что пользоваться этой командой могут только администраторы, с возможностью банить пользователя, и сам создатель группы!
     """)
+
+
+@dp.message_handler(commands=['unmute'])
+@dp.throttled(delite, rate=2)
+async def ban(msg: types.message):
+    await msg.answer('У тебя нет прав размучивать пользователей!')
 
 
 @dp.message_handler(is_chat_idd=-1001490191998, commands=['report'])
