@@ -66,9 +66,12 @@ class CheckFilter(BoundFilter):
 
     async def check(self, message: types.Message):
         try:
-            return message.forward_from
+            if message.forward_from:
+                return False
+            else:
+                return True
         except:
-            return False
+            return True
 
 
 dp.filters_factory.bind(CheckFilter)
@@ -288,7 +291,7 @@ async def get_chat_id(msg: types.message):
     
 
 
-@dp.message_handler(is_forward=False)
+@dp.message_handler(is_forward=True)
 @dp.throttled(delite, rate=0.45)
 async def nothing(msg: types.message):
     print('')
