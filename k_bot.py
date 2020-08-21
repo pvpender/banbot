@@ -3,19 +3,27 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters import BoundFilter
 from aiogram.types import ContentTypes
 from aiogram.utils.markdown import hide_link, hlink
+import sqlite3 as sq
 # from aiogram.contrib.middlewares.logging import LoggingMiddleware
 import logging
 import time
 import os
+import asyncio
 
 logging.basicConfig(level=logging.INFO)
 storage = MemoryStorage()
-TOKEN = os.environ.get('TOKEN')
+TOKEN = os.environ.get("TOKEN")
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=storage)
 
 
 # dp.middleware.setup(LoggingMiddleware())
+
+
+con = sq.connect(":memory:")
+cursor = con.cursor()
+cursor.execute("CREATE TABLE users(chat_id integer, id integer, warn integer)")
+con.commit()
 
 
 class CheckFilter(BoundFilter):
@@ -77,7 +85,6 @@ class CheckFilter(BoundFilter):
 dp.filters_factory.bind(CheckFilter)
 
 
-
 @dp.message_handler(commands=['start'])
 async def st(msg: types.message):
     await msg.answer('Я готов к работе!')
@@ -91,12 +98,9 @@ async def hello(msg: types.message):
     chat = hlink("Ссылка на чат", "https://t.me/mafgot")
     chat1 = hlink("Чат Family GØT", "https://t.me/bsgot")
     await msg.answer(f"""🗡Приветствую, {user1}️!
-
 🔫Ты попал в чат любителей игры
 Мафия,располагайся)
-
 ‼️Перед началом игры,ознокомься с базовыми знаниями игры,а  также нашими правилами {gip}‼️
-
 🔫{chat}
 🐉{chat1}""", disable_web_page_preview=True, parse_mode='HTML')
 
@@ -111,7 +115,25 @@ async def hello(msg: types.message):
 
 async def delite(*args, **kwargs):
     msg = args[0]
+    print(msg)
     await msg.delete()
+    cursor.execute("SELECT warn FROM users WHERE chat_id = ? AND id = ?", (msg.chat.id, msg.from_user.id))
+    warns = cursor.fetchone()
+    if warns is None:
+        cursor.execute("INSERT INTO users(chat_id, id, warn) VALUES(?,?,1)", (msg.chat.id, msg.from_user.id))
+    else:
+        if warns[0] < 7:
+            cursor.execute("UPDATE users SET warn = ? WHERE chat_id = ? AND id = ?", (warns[0] + 1, msg.chat.id, msg.from_user.id))
+            await asyncio.sleep(30)
+            cursor.execute("DELETE FROM users WHERE chat_id = ? AND id = ? ", (msg.chat.id, msg.from_user.id))
+        else:
+            cursor.execute("DELETE FROM users WHERE chat_id = ? AND id = ? ", (msg.chat.id, msg.from_user.id))
+            a = time.time() + 3600
+            await msg.answer(f"Пользователю @{msg.from_user.username} запрещено писать в группе на 60 минут!")
+            await bot.restrict_chat_member(msg.chat.id, msg.from_user.id, until_date=a,
+                                           can_send_messages=False, can_send_media_messages=False,
+                                           can_send_other_messages=False)
+
 
 
 @dp.message_handler(is_admin=True, commands=['ban'])
@@ -169,7 +191,6 @@ async def ban(msg: types.message):
     """)
 
 
-
 @dp.message_handler(commands=['unban'])
 @dp.throttled(delite, rate=2)
 async def ban(msg: types.message):
@@ -208,7 +229,6 @@ async def ban(msg: types.message):
 Для этого добавте этого бота в вашу группу и дайте ему полные права администратора
 Помните, что пользоваться этой командой могут только администраторы, с возможностью банить пользователя, и сам создатель группы!
     """)
-
 
 
 @dp.message_handler(commands=['mute'])
@@ -286,7 +306,6 @@ async def help(msg: types.message):
 @dp.message_handler(commands=['chatid'])
 async def get_chat_id(msg: types.message):
     await msg.answer(f"{msg.chat.id}")
-    
 
 
 @dp.message_handler(is_forward=True)
@@ -295,7 +314,7 @@ async def nothing(msg: types.message):
     print('')
 
 
-@dp.message_handler(content_types=['sticker', 'animation'])
+@dp.message_handler(content_types=['sticker', 'animation', 'document'])
 @dp.throttled(delite, rate=4)
 async def nothing(msg: types.message):
     print('')
