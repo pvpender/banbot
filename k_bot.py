@@ -26,7 +26,7 @@ cursor.execute("CREATE TABLE users(chat_id integer, id integer, warn integer)")
 con.commit()
 
 
-class CheckFilter(BoundFilter):
+class AdminFilter(BoundFilter):
     key = 'is_admin'
 
     def __init__(self, is_admin):
@@ -37,23 +37,10 @@ class CheckFilter(BoundFilter):
         return (member.can_restrict_members == self.is_admin) or (member.status == 'creator')
 
 
-dp.filters_factory.bind(CheckFilter)
+dp.filters_factory.bind(AdminFilter)
 
 
-class CheckFilter(BoundFilter):
-    key = 'chat_id'
-
-    def __init__(self, chat_id):
-        self.chat_id = chat_id
-
-    async def check(self, message: types.Message):
-        return message.chat.id == self.chat_id
-
-
-dp.filters_factory.bind(CheckFilter)
-
-
-class CheckFilter(BoundFilter):
+class ChatFilter(BoundFilter):
     key = 'is_chat_idd'
 
     def __init__(self, is_chat_idd):
@@ -63,10 +50,10 @@ class CheckFilter(BoundFilter):
         return message.chat.id == self.is_chat_idd
 
 
-dp.filters_factory.bind(CheckFilter)
+dp.filters_factory.bind(ChatFilter)
 
 
-class CheckFilter(BoundFilter):
+class ForwardMessageFilter(BoundFilter):
     key = 'is_forward'
 
     def __init__(self, is_forward):
@@ -82,7 +69,7 @@ class CheckFilter(BoundFilter):
             return True
 
 
-dp.filters_factory.bind(CheckFilter)
+dp.filters_factory.bind(ForwardMessageFilter)
 
 
 @dp.message_handler(commands=['start'])
@@ -105,7 +92,7 @@ async def hello(msg: types.message):
 🐉{chat1}""", disable_web_page_preview=True, parse_mode='HTML')
 
 
-@dp.message_handler(content_types=ContentTypes.NEW_CHAT_MEMBERS)
+@dp.message_handler(is_chat_idd=-1001279094011, content_types=ContentTypes.NEW_CHAT_MEMBERS)
 async def hello(msg: types.message):
     user = f"https://t.me/{msg.new_chat_members[0].username}"
     user1 = hlink(f"{msg.new_chat_members[0].full_name}", user)
@@ -115,7 +102,6 @@ async def hello(msg: types.message):
 
 async def delite(*args, **kwargs):
     msg = args[0]
-    print(msg)
     await msg.delete()
     cursor.execute("SELECT warn FROM users WHERE chat_id = ? AND id = ?", (msg.chat.id, msg.from_user.id))
     warns = cursor.fetchone()
@@ -133,7 +119,6 @@ async def delite(*args, **kwargs):
             await bot.restrict_chat_member(msg.chat.id, msg.from_user.id, until_date=a,
                                            can_send_messages=False, can_send_media_messages=False,
                                            can_send_other_messages=False)
-
 
 
 @dp.message_handler(is_admin=True, commands=['ban'])
@@ -306,18 +291,22 @@ async def help(msg: types.message):
 @dp.message_handler(commands=['chatid'])
 async def get_chat_id(msg: types.message):
     await msg.answer(f"{msg.chat.id}")
+    if msg.forward_from:
+        print(msg)
+    else:
+        print("No")
 
 
 @dp.message_handler(is_forward=True)
 @dp.throttled(delite, rate=0.45)
 async def nothing(msg: types.message):
-    print('')
+    pass
 
 
 @dp.message_handler(content_types=['sticker', 'animation', 'document'])
 @dp.throttled(delite, rate=2.5)
 async def nothing(msg: types.message):
-    print('')
+    pass
 
 
 if __name__ == '__main__':
