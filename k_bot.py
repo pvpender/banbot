@@ -124,11 +124,17 @@ async def delite(*args, **kwargs):
 @dp.message_handler(is_admin=True, commands=['ban'])
 async def ban(msg: types.message):
     try:
+        trans_letters = {'y': 31536000, 'm': 2592000, 'w': 604800, 'd': 86400, 'h': 3600}
         h = msg.text
         a = time.time()
         try:
             b = h[5:len(h)]
-            a = a + (int(b) * 60)
+            if b[len(b) - 1] in trans_letters:
+                a = a + int(b[:len(b) - 1]) * trans_letters[b[len(b) - 1]]
+                b = b[:len(b)]
+                b = (int(b[:len(b) - 1]) * trans_letters[b[len(b) - 1]]) // 60
+            else:
+                a = a + (int(b) * 60)
             if int(b) < 1 or int(b) > 525600:
                 await msg.answer('Слишком маленький или слишком большой промежуток времени!')
             elif msg.reply_to_message.from_user.id != 898287979:
@@ -185,11 +191,17 @@ async def ban(msg: types.message):
 @dp.message_handler(is_admin=True, commands=['mute'])
 async def mute(msg: types.message):
     try:
+        trans_letters = {'y': 31536000, 'm': 2592000, 'w': 604800, 'd': 86400, 'h': 3600}
         h = msg.text
         a = time.time()
         try:
             b = h[6:len(h)]
-            a = a + (int(b) * 60)
+            if b[len(b)-1] in trans_letters:
+                a = a + int(b[:len(b)-1]) * trans_letters[b[len(b)-1]]
+                b = b[:len(b)]
+                b = (int(b[:len(b)-1]) * trans_letters[b[len(b)-1]]) // 60
+            else:
+                a = a + (int(b) * 60)
             if int(b) < 1 or int(b) > 525600:
                 await msg.answer('Слишком маленький или слишком большой промежуток времени!')
             elif msg.reply_to_message.from_user.id != 898287979:
