@@ -291,10 +291,6 @@ async def help(msg: types.message):
 @dp.message_handler(commands=['chatid'])
 async def get_chat_id(msg: types.message):
     await msg.answer(f"{msg.chat.id}")
-    if msg.forward_from:
-        print(msg)
-    else:
-        print("No")
 
 
 @dp.message_handler(is_forward=True)
