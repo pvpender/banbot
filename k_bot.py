@@ -105,7 +105,7 @@ async def hello(msg: types.message):
 🐉{chat1}""", disable_web_page_preview=True, parse_mode='HTML')
 
 
-@dp.message_handler(is_chat_idd=-1001279094011, content_types=ContentTypes.NEW_CHAT_MEMBERS)
+@dp.message_handler(content_types=ContentTypes.NEW_CHAT_MEMBERS)
 async def hello(msg: types.message):
     user = f"https://t.me/{msg.new_chat_members[0].username}"
     user1 = hlink(f"{msg.new_chat_members[0].full_name}", user)
