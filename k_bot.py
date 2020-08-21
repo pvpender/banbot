@@ -296,7 +296,7 @@ async def nothing(msg: types.message):
 
 
 @dp.message_handler(content_types=['sticker', 'animation'])
-@dp.throttled(delite, rate=2)
+@dp.throttled(delite, rate=4)
 async def nothing(msg: types.message):
     print('')
 
