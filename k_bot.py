@@ -122,7 +122,7 @@ async def delite(*args, **kwargs):
     if warns is None:
         cursor.execute("INSERT INTO users(chat_id, id, warn) VALUES(?,?,1)", (msg.chat.id, msg.from_user.id))
     else:
-        if warns[0] < 7:
+        if warns[0] < 5:
             cursor.execute("UPDATE users SET warn = ? WHERE chat_id = ? AND id = ?", (warns[0] + 1, msg.chat.id, msg.from_user.id))
             await asyncio.sleep(30)
             cursor.execute("DELETE FROM users WHERE chat_id = ? AND id = ? ", (msg.chat.id, msg.from_user.id))
