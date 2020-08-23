@@ -142,8 +142,9 @@ async def ban(msg: types.message):
                 await msg.answer(
                     f"Пользователь @{msg.reply_to_message.from_user.username} забанен в группе на {b} минут!")
         except:
-            await bot.kick_chat_member(msg.chat.id, msg.reply_to_message.from_user.id)
-            await msg.answer(f"Пользователь @{msg.reply_to_message.from_user.username} забанен в группе навсегда!")
+            if msg.reply_to_message.from_user.id != 898287979:
+                await bot.kick_chat_member(msg.chat.id, msg.reply_to_message.from_user.id)
+                await msg.answer(f"Пользователь @{msg.reply_to_message.from_user.username} забанен в группе навсегда!")
     except:
         await msg.answer('Ответьте на сообщение пользователя, которого хотите забанить')
 
@@ -211,11 +212,12 @@ async def mute(msg: types.message):
                 await msg.answer(
                     f"Пользователю @{msg.reply_to_message.from_user.username} запрещено писать в группе на {int(b)} минут!")
         except:
-            await bot.restrict_chat_member(msg.chat.id, msg.reply_to_message.from_user.id, can_send_messages=False,
-                                           can_send_media_messages=False,
-                                           can_send_other_messages=False)
-            await msg.answer(
-                f"Пользователю @{msg.reply_to_message.from_user.username} запрещено писать в группе навсегда!")
+            if msg.reply_to_message.from_user.id != 898287979:
+                await bot.restrict_chat_member(msg.chat.id, msg.reply_to_message.from_user.id, can_send_messages=False,
+                                               can_send_media_messages=False,
+                                               can_send_other_messages=False)
+                await msg.answer(
+                    f"Пользователю @{msg.reply_to_message.from_user.username} запрещено писать в группе навсегда!")
     except:
         await msg.answer('Ответьте на сообщение пользователя, которого хотите замутить')
 
