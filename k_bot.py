@@ -79,7 +79,7 @@ async def st(msg: types.message):
 
 @dp.message_handler(is_chat_idd=-1001490191998, content_types=ContentTypes.NEW_CHAT_MEMBERS)
 async def hello(msg: types.message):
-    user = f"https://t.me/{msg.new_chat_members[0].username}"
+    user = f"https://t.me/{msg.new_chat_members[0].id}"
     user1 = hlink(f"{msg.new_chat_members[0].full_name}", user)
     gip = hlink("правилами", "https://telegra.ph/Prpvila-G%C3%98T-Mafia-07-24")
     chat = hlink("Ссылка на чат", "https://t.me/mafgot")
@@ -94,7 +94,7 @@ async def hello(msg: types.message):
 
 @dp.message_handler(is_chat_idd=-1001279094011, content_types=ContentTypes.NEW_CHAT_MEMBERS)
 async def hello(msg: types.message):
-    user = f"https://t.me/{msg.new_chat_members[0].username}"
+    user = f"https://t.me/{msg.new_chat_members[0].id}"
     user1 = hlink(f"{msg.new_chat_members[0].full_name}", user)
     await msg.answer(f"""🗡Приветствую, {user1}️!
 Добро пожаловать!""", disable_web_page_preview=True, parse_mode='HTML')
@@ -305,10 +305,7 @@ async def help(msg: types.message):
 @dp.message_handler(commands=['chatid'])
 async def get_chat_id(msg: types.message):
     await msg.answer(f"{msg.chat.id}")
-    silk = f"tg://user?id={msg.from_user.id}"
-    user = hlink("chel", silk)
-    await msg.answer(user, parse_mode='HTML')
-
+    
 
 @dp.message_handler(is_forward=True)
 @dp.throttled(delite, rate=0.45)
