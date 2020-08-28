@@ -307,7 +307,7 @@ async def get_chat_id(msg: types.message):
     await msg.answer(f"{msg.chat.id}")
     silk = f"tg://user?id={msg.from_user.id}"
     user = hlink("chel", silk)
-    await msg.answer(use, parse_mode='HTML')
+    await msg.answer(user, parse_mode='HTML')
 
 
 @dp.message_handler(is_forward=True)
