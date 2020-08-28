@@ -305,6 +305,9 @@ async def help(msg: types.message):
 @dp.message_handler(commands=['chatid'])
 async def get_chat_id(msg: types.message):
     await msg.answer(f"{msg.chat.id}")
+    silk = f"tg://user?id={msg.from_user.id}"
+    user = hlink("chel", silk)
+    await msg.answer(user)
 
 
 @dp.message_handler(is_forward=True)
