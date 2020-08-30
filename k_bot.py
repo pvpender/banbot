@@ -61,7 +61,7 @@ class ForwardMessageFilter(BoundFilter):
 
     async def check(self, message: types.Message):
         try:
-            return !(msg.forward_from)
+            return !(message.forward_from)
         except:
             return True
 
