@@ -307,6 +307,11 @@ async def get_chat_id(msg: types.message):
     await msg.answer(f"{msg.chat.id}")
     
 
+@dp.message_handler(text=['привет'])
+async def pr(msg: types.message):
+    await msg.answer('hi')
+
+
 @dp.message_handler(is_forward=True)
 @dp.throttled(delite, rate=0.45)
 async def nothing(msg: types.message):
