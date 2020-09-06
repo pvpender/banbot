@@ -307,9 +307,9 @@ async def get_chat_id(msg: types.message):
     await msg.answer(f"{msg.chat.id}")
     
 
-@dp.message_handler(text=['привет'])
+@dp.message_handler(text=['Игра начинается!'])
 async def pr(msg: types.message):
-    await msg.answer('hi')
+    await bot.pin_chat_message(chat_id=-1001490191998, message_id=-1001490191998)
 
 
 @dp.message_handler(is_forward=True)
