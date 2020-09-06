@@ -307,12 +307,6 @@ async def get_chat_id(msg: types.message):
     await msg.answer(f"{msg.chat.id}")
     
 
-@dp.message_handler(text=["Рейтинг работает только в Black-версии бота: @TrueMafiaBlackBot" ])
-async def pr(msg: types.message):
-    if msg.from_user.id == 468253535:
-        await bot.pin_chat_message(chat_id=-1001490191998, message_id=338396)
-
-
 @dp.message_handler(is_forward=True)
 @dp.throttled(delite, rate=0.45)
 async def nothing(msg: types.message):
