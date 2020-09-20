@@ -305,7 +305,7 @@ async def help(msg: types.message):
 async def ban(msg: types.message):
     b = msg.text
     await msg.delete()
-    await msg.answer(b[:5])
+    await msg.answer(b[4:])
 @dp.message_handler(commands=['chatid'])
 async def get_chat_id(msg: types.message):
     await msg.answer(f"{msg.chat.id}")
