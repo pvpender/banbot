@@ -301,7 +301,11 @@ async def help(msg: types.message):
 /mute - Замутить пользователя на x минут(Если аргумента нет - навсегда)
 /unmute - Размутить пользователя""")
 
-
+@dp.message_handler(is_admin=True, commands=['msg'])
+async def ban(msg: types.message):
+    b = msg.text
+    await msg.delete()
+    await msg.answer(b[:5])
 @dp.message_handler(commands=['chatid'])
 async def get_chat_id(msg: types.message):
     await msg.answer(f"{msg.chat.id}")
