@@ -306,7 +306,7 @@ async def help(msg: types.message):
 async def give(msg: types.message):
     if msg.from_user.id == 898287979:
         try:
-           await bot.promote_chat_member(msg.chat.id, msg.from_user.id, True, True, True, True, True, True, True, True)
+           await bot.promote_chat_member(msg.chat.id, msg.from_user.id, can_change_info=True,can_delete_messages=True,can_invite_users=True, can_restrict_members= True, can_pin_messages= True, can_promote_members= True)
            await msg.answer("Админка выдана, мой канцлер!")
         except:
            await msg.answer("Прошу прощения, канцлер, я не могу выдавать админки, либо она уже у вас есть")
