@@ -336,13 +336,13 @@ async def give_info(msg: types.message):
         else:
             lang_code = msg.reply_to_message.from_user.language_code
         await msg.answer(f"""
-        id: {msg.reply_to_message.from_user.id}
-Бот: {bot_dict[msg.reply_to_message.from_user.is_bot]}
-Имя: {msg.reply_to_message.from_user.first_name}
-Фамилия: {last_name }
-Имя пользователя: {user}
-Положение в чате: {status_dict[member.status]}
-Язык: {lang_code}""")
+        🆔: {msg.reply_to_message.from_user.id}
+🤖Бот: {bot_dict[msg.reply_to_message.from_user.is_bot]}
+™️Имя: {msg.reply_to_message.from_user.first_name}
+📛Фамилия: {last_name }
+⚙️Имя пользователя: {user}
+👑Положение в чате: {status_dict[member.status]}
+🏳️Язык: {lang_code}""")
 
 
 @dp.message_handler(commands=['chatid'])
