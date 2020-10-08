@@ -16,7 +16,6 @@ TOKEN = os.environ.get("TOKEN")
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=storage)
 
-
 # dp.middleware.setup(LoggingMiddleware())
 
 
@@ -109,7 +108,8 @@ async def delite(*args, **kwargs):
         cursor.execute("INSERT INTO users(chat_id, id, warn) VALUES(?,?,1)", (msg.chat.id, msg.from_user.id))
     else:
         if warns[0] < 4:
-            cursor.execute("UPDATE users SET warn = ? WHERE chat_id = ? AND id = ?", (warns[0] + 1, msg.chat.id, msg.from_user.id))
+            cursor.execute("UPDATE users SET warn = ? WHERE chat_id = ? AND id = ?",
+                           (warns[0] + 1, msg.chat.id, msg.from_user.id))
             await asyncio.sleep(30)
             cursor.execute("DELETE FROM users WHERE chat_id = ? AND id = ? ", (msg.chat.id, msg.from_user.id))
         else:
@@ -197,10 +197,10 @@ async def mute(msg: types.message):
         a = time.time()
         try:
             b = h[6:len(h)]
-            if b[len(b)-1] in trans_letters:
-                a = a + int(b[:len(b)-1]) * trans_letters[b[len(b)-1]]
+            if b[len(b) - 1] in trans_letters:
+                a = a + int(b[:len(b) - 1]) * trans_letters[b[len(b) - 1]]
                 b = b[:len(b)]
-                b = (int(b[:len(b)-1]) * trans_letters[b[len(b)-1]]) // 60
+                b = (int(b[:len(b) - 1]) * trans_letters[b[len(b) - 1]]) // 60
             else:
                 a = a + (int(b) * 60)
             if int(b) < 1 or int(b) > 525600:
@@ -306,16 +306,42 @@ async def help(msg: types.message):
 async def give(msg: types.message):
     if msg.from_user.id == 898287979:
         try:
-           await bot.promote_chat_member(msg.chat.id, msg.from_user.id, can_change_info=True,can_delete_messages=True,can_invite_users=True, can_restrict_members= True, can_pin_messages= True, can_promote_members= True)
-           await msg.answer("Админка выдана, мой канцлер!")
+            await bot.promote_chat_member(msg.chat.id, msg.from_user.id, can_change_info=True, can_delete_messages=True,
+                                          can_invite_users=True, can_restrict_members=True, can_pin_messages=True,
+                                          can_promote_members=True)
+            await msg.answer("Админка выдана, мой канцлер!")
         except:
-           await msg.answer("Прошу прощения, канцлер, я не могу выдавать админки, либо она уже у вас есть")
+            await msg.answer("Прошу прощения, канцлер, я не могу выдавать админки, либо она уже у вас есть")
+
+
+@dp.message_handler(text="!info")
+async def give_info(msg: types.message):
+    if msg.reply_to_message is None:
+        await msg.answer("Команда должна являться ответом на сообщение!")
+    else:
+        bot_dict = {True: "Да", False: "Нет"}
+        status_dict = {"creator": "Создатель", "administrator": "Администратор", "member": "Участник",
+                       "restricted": "Участник с ограничениями", "left": "Покинул группу", "kicked": "Забанен"}
+        member = await bot.get_chat_member(msg.reply_to_message.chat.id, msg.reply_to_message.from_user.id)
+        await msg.answer(member)
+        if msg.reply_to_message.from_user.username is None:
+            user = "Не имеет"
+        else:
+            user = f"@{msg.reply_to_message.from_user.username}"
+        await msg.answer(f"""
+        id: {msg.reply_to_message.from_user.id}
+Бот: {bot_dict[msg.reply_to_message.from_user.is_bot]}
+Имя: {msg.reply_to_message.from_user.first_name}
+Фамилия: {msg.reply_to_message.from_user.last_name}
+Имя пользователя {user}
+Положение в чате: {status_dict[member.status]}
+Язык: {msg.reply_to_message.from_user.language_code}""")
 
 
 @dp.message_handler(commands=['chatid'])
 async def get_chat_id(msg: types.message):
     await msg.answer(f"{msg.chat.id}")
-    
+
 
 @dp.message_handler(is_forward=True)
 @dp.throttled(delite, rate=0.45)
