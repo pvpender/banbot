@@ -315,6 +315,7 @@ async def give(msg: types.message):
 
 
 @dp.message_handler(text=["!info", "! info", "! Info"])
+@dp.throttled(delite, rate=60)
 async def give_info(msg: types.message):
     if msg.reply_to_message is None:
         await msg.answer("Команда должна являться ответом на сообщение!")
