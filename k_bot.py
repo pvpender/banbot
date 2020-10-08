@@ -314,7 +314,7 @@ async def give(msg: types.message):
             await msg.answer("Прошу прощения, канцлер, я не могу выдавать админки, либо она уже у вас есть")
 
 
-@dp.message_handler(text=["!info", "! info"])
+@dp.message_handler(text=["!info", "! info", "! Info"])
 async def give_info(msg: types.message):
     if msg.reply_to_message is None:
         await msg.answer("Команда должна являться ответом на сообщение!")
