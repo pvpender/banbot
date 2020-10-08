@@ -331,6 +331,10 @@ async def give_info(msg: types.message):
             last_name = "Не указана"
         else:
             last_name = msg.reply_to_message.from_user.last_name
+        if msg.reply_to_message.from_user.language_code is None:
+            lang_code = "Не указан"
+        else:
+            lang_code = msg.reply_to_message.from_user.language_code
         await msg.answer(f"""
         id: {msg.reply_to_message.from_user.id}
 Бот: {bot_dict[msg.reply_to_message.from_user.is_bot]}
@@ -338,7 +342,7 @@ async def give_info(msg: types.message):
 Фамилия: {last_name }
 Имя пользователя: {user}
 Положение в чате: {status_dict[member.status]}
-Язык: {msg.reply_to_message.from_user.language_code}""")
+Язык: {lang_code}""")
 
 
 @dp.message_handler(commands=['chatid'])
