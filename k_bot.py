@@ -323,17 +323,20 @@ async def give_info(msg: types.message):
         status_dict = {"creator": "Создатель", "administrator": "Администратор", "member": "Участник",
                        "restricted": "Участник с ограничениями", "left": "Покинул группу", "kicked": "Забанен"}
         member = await bot.get_chat_member(msg.reply_to_message.chat.id, msg.reply_to_message.from_user.id)
-        await msg.answer(member)
         if msg.reply_to_message.from_user.username is None:
             user = "Не имеет"
         else:
             user = f"@{msg.reply_to_message.from_user.username}"
+        if msg.reply_to_message.from_user.last_name is None:
+            last_name = "Не указана"
+        else:
+            last_name = msg.reply_to_message.from_user.last_name
         await msg.answer(f"""
         id: {msg.reply_to_message.from_user.id}
 Бот: {bot_dict[msg.reply_to_message.from_user.is_bot]}
 Имя: {msg.reply_to_message.from_user.first_name}
-Фамилия: {msg.reply_to_message.from_user.last_name}
-Имя пользователя {user}
+Фамилия: {last_name }
+Имя пользователя: {user}
 Положение в чате: {status_dict[member.status]}
 Язык: {msg.reply_to_message.from_user.language_code}""")
 
