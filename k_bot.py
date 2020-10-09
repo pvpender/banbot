@@ -294,9 +294,11 @@ async def send_report(msg: types.message):
         await msg.answer("Команда должна являться ответом на сообщение!")
     else:
         admins = await bot.get_chat_administrators(msg.chat.id)
-        await msg.answer("Я отправил жалобу администраторам!")
+
         chat_link = f"tg://chat?id={msg.chat.id}"
-        chat_high_link = hlink(f"{msg.chat.fullname}", chat_link)
+        chat_high_link = hlink(f"{msg.chat.first_name}", chat_link)
+        await msg.answer("Я отправил жалобу администраторам!")
+
         for a in admins:
             if (a.can_delete_messages is True or a.status == "creator") and a.user.is_bot is False:
                 try:
