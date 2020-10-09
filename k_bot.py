@@ -303,10 +303,20 @@ async def send_report(msg: types.message):
         user2 = hlink(f"{msg.from_user.first_name}", user2_link)
         message_link = f"https://t.me/{msg.chat.username}/{msg.reply_to_message.message_id}"
         message = hlink("Ссылка на сообщение", message_link)
+        mute1 = InlineKeyboardButton("Замутить нарушителя на час", callback_data="m1")
+        mute2 = InlineKeyboardButton("Замутить за ложный репорт на час", callback_data="m2")
+        del_message = InlineKeyboardButton("Удалить сообщение", callback_data="d")
+        ban_user = InlineKeyboardButton("Забанить нарушителя", callback_data="b")
+        keyboard = InlineKeyboardMarkup().add(mute1, mute2, del_message, ban_user)
         for a in admins:
             if (a.can_delete_messages is True or a.status == "creator") and a.user.is_bot is False:
                 try:
-                    await bot.send_message(chat_id=a.user.id, text=f"{chat_high_link}, {user1}, {user2}, {message}", parse_mode="HTML")
+                    await bot.send_message(chat_id=a.user.id, text=f"""{chat_high_link}
+{user1}
+{user2}
+{message}
+{msg.reply_to_message.text}
+Что делать с нарушителем?""", parse_mode="HTML", reply_markup=keyboard)
                 except:
                     pass
 
