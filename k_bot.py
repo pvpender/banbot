@@ -290,6 +290,7 @@ async def report(msg: types.message):
 
 
 @dp.message_handler(commands=["report"])
+@dp.throttled(delite, rate=60)
 async def send_report(msg: types.message):
     if msg.reply_to_message is None:
         await msg.answer("Команда должна являться ответом на сообщение!")
