@@ -300,7 +300,7 @@ async def send_report(msg: types.message):
         user1_link = f"tg://user?id={msg.reply_to_message.from_user.id}"
         user1 = hlink(f"{msg.reply_to_message.from_user.first_name}", user1_link)
         user2_link = f"tg://user?id={msg.from_user.id}"
-        user2 = hlink(f"{msg.from_user.firstname}", user2_link)
+        user2 = hlink(f"{msg.from_user.first_name}", user2_link)
         await msg.answer("Я отправил жалобу администраторам!")
         for a in admins:
             if (a.can_delete_messages is True or a.status == "creator") and a.user.is_bot is False:
