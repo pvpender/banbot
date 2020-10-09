@@ -314,7 +314,7 @@ async def send_report(msg: types.message):
 
 @dp.message_handler(commands=['text'])
 async def tx(msg: types.message):
-    await msg.answer(msg.reply_to_message.entities[0].url)
+    await msg.answer(msg.reply_to_message)
 
 @dp.message_handler(commands=['help'])
 async def help(msg: types.message):
