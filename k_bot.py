@@ -321,10 +321,16 @@ async def send_report(msg: types.message):
                     pass
 
 
+@dp.callback_query_handler(lambda m: m.data == "d")
+async def d(m):
+    pass
+
+
 
 @dp.message_handler(commands=['text'])
 async def tx(msg: types.message):
     await msg.answer(msg.reply_to_message)
+    l = msg.reply_to_message.entities[3].split("/")
 
 
 @dp.message_handler(commands=['help'])
