@@ -332,7 +332,7 @@ async def d(m):
        # message_id = message_id.split("/")
         #message_id1 = int(message_id[4])
         #await bot.delete_message(chat_id1, message_id1)
-        await m.answer("Готово! Я удалил сообщение!")
+        await m.answer(m.message)
     except:
         await m.answer("No")
 
