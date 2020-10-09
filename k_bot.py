@@ -291,7 +291,8 @@ async def report(msg: types.message):
 @dp.message_handler(commands=["report"])
 async def send_report(msg: types.message):
     admins = await bot.get_chat_administrators(msg.chat.id)
-    await msg.answer(admins)
+    for a in admins:
+        await msg.answer(a.status)
 
 
 @dp.message_handler(commands=['help'])
