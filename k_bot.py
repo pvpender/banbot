@@ -301,7 +301,7 @@ async def send_report(msg: types.message):
         user1 = hlink(f"{msg.reply_to_message.from_user.first_name}", user1_link)
         user2_link = f"tg://user?id={msg.from_user.id}"
         user2 = hlink(f"{msg.from_user.first_name}", user2_link)
-        message_link = f"https://t.me/{msg.chat.id}/{msg.reply_to_message.message_id}"
+        message_link = f"https://t.me/{msg.chat.username}/{msg.reply_to_message.message_id}"
         message = hlink("Ссылка на сообщение", message_link)
         for a in admins:
             if (a.can_delete_messages is True or a.status == "creator") and a.user.is_bot is False:
