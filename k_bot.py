@@ -332,6 +332,8 @@ async def tx(msg: types.message):
     await msg.answer(msg.reply_to_message)
     l = str(msg.reply_to_message.entities[3].url)
     l = l.split("/")
+    k = str(msg.reply_to_message.entities[0].url)
+    k = k.split("/")
     await msg.answer(l)
 
 
