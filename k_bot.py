@@ -290,13 +290,17 @@ async def report(msg: types.message):
 
 @dp.message_handler(commands=["report"])
 async def send_report(msg: types.message):
-    admins = await bot.get_chat_administrators(msg.chat.id)
-    for a in admins:
-        if (a.can_delete_messages is True or a.status == "creator") and a.user.is_bot is False:
-            try:
-                await bot.send_message(chat_id=a.user.id, text="Саня, по коням! Возможно криминал!")
-            except:
-                pass
+    if msg.reply_to_message is None:
+        await msg.answer("Команда должна являться ответом на сообщение!")
+    else:
+        admins = await bot.get_chat_administrators(msg.chat.id)
+        await msg.answer("Я отправил жалобу администраторам!")
+        for a in admins:
+            if (a.can_delete_messages is True or a.status == "creator") and a.user.is_bot is False:
+                try:
+                    await bot.send_message(chat_id=a.user.id, text="Саня, по коням! Возможно криминал!")
+                except:
+                    pass
 
 
 @dp.message_handler(commands=['help'])
