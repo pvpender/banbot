@@ -3,6 +3,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters import BoundFilter
 from aiogram.types import ContentTypes
 from aiogram.utils.markdown import hide_link, hlink
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import sqlite3 as sq
 # from aiogram.contrib.middlewares.logging import LoggingMiddleware
 import logging
@@ -285,6 +286,12 @@ async def report(msg: types.message):
 """, disable_web_page_preview=True)
     else:
         await msg.answer('Ответьте на сообщение пользователя на которого хотите пожаловаться')
+
+
+@dp.message_handler(commands=["report"])
+async def send_report(msg: types.message):
+    admins = await bot.get_chat_administrators(msg.chat.id)
+    await msg.answe(admins)
 
 
 @dp.message_handler(commands=['help'])
