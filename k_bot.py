@@ -331,6 +331,7 @@ async def d(m):
 async def tx(msg: types.message):
     await msg.answer(msg.reply_to_message)
     l = msg.reply_to_message.entities[3].split("/")
+    await msg.answer(l)
 
 
 @dp.message_handler(commands=['help'])
