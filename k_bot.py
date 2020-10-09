@@ -292,8 +292,7 @@ async def report(msg: types.message):
 async def send_report(msg: types.message):
     admins = await bot.get_chat_administrators(msg.chat.id)
     for a in admins:
-        if ((a.can_delete_messages is True and a.can_restrict_members is True) or a.status == "creator") & a.user.is_bot \
-                is False:
+        if ((a.can_delete_messages is True and a.can_restrict_members is True) or a.status == "creator") & a.user.is_bot is False:
             await msg.answer(a.user.full_name)
 
 
