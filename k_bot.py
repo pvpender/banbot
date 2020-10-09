@@ -292,7 +292,8 @@ async def report(msg: types.message):
 async def send_report(msg: types.message):
     admins = await bot.get_chat_administrators(msg.chat.id)
     for a in admins:
-        await msg.answer(a.status)
+        if a.can_restrict_members == True & a.user.is_bot == False:
+            await msg.answer(a.user.full_name)
 
 
 @dp.message_handler(commands=['help'])
