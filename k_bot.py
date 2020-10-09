@@ -330,7 +330,8 @@ async def d(m):
 @dp.message_handler(commands=['text'])
 async def tx(msg: types.message):
     await msg.answer(msg.reply_to_message)
-    l = msg.reply_to_message.entities[3].split("/")
+    l = str(msg.reply_to_message.entities[3].url)
+    l = l.split("/")
     await msg.answer(l)
 
 
