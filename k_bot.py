@@ -307,7 +307,7 @@ async def send_report(msg: types.message):
         mute2 = InlineKeyboardButton("Замутить за ложный репорт на час", callback_data="m2")
         del_message = InlineKeyboardButton("Удалить сообщение", callback_data="d")
         ban_user = InlineKeyboardButton("Забанить нарушителя", callback_data="b")
-        keyboard = InlineKeyboardMarkup(row_width=12).add(mute1, mute2, del_message, ban_user)
+        keyboard = InlineKeyboardMarkup(row_width=1).add(mute1, mute2, del_message, ban_user)
         for a in admins:
             if (a.can_delete_messages is True or a.status == "creator") and a.user.is_bot is False:
                 try:
