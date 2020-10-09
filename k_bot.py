@@ -3,6 +3,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters import BoundFilter
 from aiogram.types import ContentTypes
 from aiogram.utils.markdown import hide_link, hlink
+from aiogram.utils.exceptions import MessageToDeleteNotFound, MessageCantBeDeleted, NotEnoughRightsToRestrict, BadRequest
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import sqlite3 as sq
 # from aiogram.contrib.middlewares.logging import LoggingMiddleware
@@ -311,31 +312,88 @@ async def send_report(msg: types.message):
         for a in admins:
             if (a.can_delete_messages is True or a.status == "creator") and a.user.is_bot is False:
                 try:
-                    await bot.send_message(chat_id=a.user.id, text=f"""{chat_high_link}
-{user1}
-{user2}
+                    await bot.send_message(chat_id=a.user.id, text=f"""<b>Внимание! Report из </b>{chat_high_link}
+<b>Жалоба на:</b> {user1}
+<b>От:</b> {user2}
 {message}
-{msg.reply_to_message.text}
-Что делать с нарушителем?""", parse_mode="HTML", reply_markup=keyboard)
+<b>Текст сообщения:</b> {msg.reply_to_message.text}
+<b>Что делать с нарушителем?</b>""", parse_mode="HTML", reply_markup=keyboard)
                 except:
                     pass
+
+
+@dp.callback_query_handler(lambda m: m.data == "m1")
+async def m1(m):
+    try:
+        user1_id = m.message.entities[3].user.id
+        chat_id = m.message.entities[1].url
+        chat_id = chat_id.split("/")
+        chat_id = chat_id[2]
+        chat_id1 = int(chat_id[8:])
+        a = time.time()
+        a += 3600
+        await bot.restrict_chat_member(chat_id1, user1_id, can_send_messages=False,
+                                       can_send_media_messages=False,
+                                       can_send_other_messages=False, until_date=a)
+        await m.answer("Пользователю запрещено писать в группе на 1 час!", show_alert=True)
+    except NotEnoughRightsToRestrict:
+        await m.answer("Нельзя замутить пользователя, у бота недостаточно прав!", show_alert=True)
+    except BadRequest:
+        await m.answer("Не могу замутить данного пользователя!", show_alert=True)
+
+
+@dp.callback_query_handler(lambda m: m.data == "m2")
+async def m2(m):
+    try:
+        user2_id = m.message.entities[5].user.id
+        chat_id = m.message.entities[1].url
+        chat_id = chat_id.split("/")
+        chat_id = chat_id[2]
+        chat_id1 = int(chat_id[8:])
+        a = time.time()
+        a += 3600
+        await bot.restrict_chat_member(chat_id1, user2_id, can_send_messages=False,
+                                       can_send_media_messages=False,
+                                       can_send_other_messages=False, until_date=a)
+        await m.answer("Пользователю запрещено писать в группе на 1 час!", show_alert=True)
+    except NotEnoughRightsToRestrict:
+        await m.answer("Нельзя замутить пользователя, у бота недостаточно прав!", show_alert=True)
+    except BadRequest:
+        await m.answer("Не могу замутить данного пользователя!", show_alert=True)
 
 
 @dp.callback_query_handler(lambda m: m.data == "d")
 async def d(m):
     try:
-        #chat_id = m.message.entities[0].ulr
-        #chat_id = chat_id.split("/")
-        #chat_id = chat_id[2]
-        #chat_id1 = int(chat_id[8:])
-        #message_id = m.message.entities[3].ulr
-       # message_id = message_id.split("/")
-        #message_id1 = int(message_id[4])
-        #await bot.delete_message(chat_id1, message_id1)
-        await m.answer(m.message)
-    except:
-        await m.answer("No")
+        chat_id = m.message.entities[1].url
+        chat_id = chat_id.split("/")
+        chat_id = chat_id[2]
+        chat_id1 = int(chat_id[8:])
+        message_id = m.message.entities[6].url
+        message_id = message_id.split("/")
+        message_id1 = int(message_id[4])
+        await bot.delete_message(chat_id1, message_id1)
+        await m.answer("Я удалил сообщение нарушителя!", show_alert=True)
+    except MessageToDeleteNotFound:
+        await m.answer("Сообщение уже удалено!", show_alert=True)
+    except MessageCantBeDeleted:
+        await m.answer("Сообщение не может быть удалено, у бота недостаточно прав!", show_alert=True)
 
+
+@dp.callback_query_handler(lambda m: m.data == "b")
+async def b(m):
+    try:
+        user1_id = m.message.entities[3].user.id
+        chat_id = m.message.entities[1].url
+        chat_id = chat_id.split("/")
+        chat_id = chat_id[2]
+        chat_id1 = int(chat_id[8:])
+        await bot.kick_chat_member(chat_id1, user1_id)
+        await m.answer("Пользователь забанен!", show_alert=True)
+    except NotEnoughRightsToRestrict:
+        await m.answer("Нельзя забанить пользователя, у бота недостаточно прав!", show_alert=True)
+    except BadRequest:
+        await m.answer("Не могу забанить данного пользователя!", show_alert=True)
 
 
 @dp.message_handler(commands=['text'])
@@ -402,7 +460,7 @@ async def give_info(msg: types.message):
         🆔: {msg.reply_to_message.from_user.id}
 🤖Бот: {bot_dict[msg.reply_to_message.from_user.is_bot]}
 ™️Имя: {msg.reply_to_message.from_user.first_name}
-📛Фамилия: {last_name }
+📛Фамилия: {last_name}
 ⚙️Имя пользователя: {user}
 👑Положение в чате: {status_dict[member.status]}
 🏳️Язык: {lang_code}""")
