@@ -295,13 +295,20 @@ async def send_report(msg: types.message):
     else:
         admins = await bot.get_chat_administrators(msg.chat.id)
         await msg.answer("Я отправил жалобу администраторам!")
+        chat_link = f"tg://chat?id={msg.chat.id}"
+        chat_high_link = hlink(f"{msg.chat.fullname}", chat_link)
         for a in admins:
             if (a.can_delete_messages is True or a.status == "creator") and a.user.is_bot is False:
                 try:
-                    await bot.send_message(chat_id=a.user.id, text="Саня, по коням! Возможно криминал!")
+                    await bot.send_message(chat_id=a.user.id, text=f"{chat_high_link}", parse_mode="HTML")
                 except:
                     pass
 
+
+
+@dp.message_handler(commands=['text'])
+async def tx(msg: types.message):
+    await msg.answer(msg.reply_to_message.text)
 
 @dp.message_handler(commands=['help'])
 async def help(msg: types.message):
