@@ -327,11 +327,11 @@ async def d(m):
         chat_id = m.message.entities[0].ulr
         chat_id = chat_id.split("/")
         chat_id = chat_id[2]
-        chat_id1 = int(chat_id[8:])
+        #chat_id1 = int(chat_id[8:])
         message_id = m.message.entities[3].ulr
         message_id = message_id.split("/")
-        message_id1 = int(message_id[4])
-        await bot.delete_message(chat_id1, message_id1)
+        #message_id1 = int(message_id[4])
+        #await bot.delete_message(chat_id1, message_id1)
         await m.answer("Готово! Я удалил сообщение!")
     except:
         await m.answer("No")
