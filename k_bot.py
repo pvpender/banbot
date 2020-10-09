@@ -297,11 +297,14 @@ async def send_report(msg: types.message):
         chat_link = f"tg://chat?id={msg.chat.id}"
         chat_high_link = hlink(f"{msg.chat.title}", chat_link)
         await msg.answer("Я отправил жалобу администраторам!")
-
+        user1_link = f"tg://user?id={msg.reply_to_message.from_user.id}"
+        user1 = hlink(f"{msg.reply_to_message.from_user.first_name}", user1_link)
+        user2_link = f"tg://user?id={msg.from_user.id}"
+        user2 = hlink(f"{msg.from_user.firstname}", user2_link)
         for a in admins:
             if (a.can_delete_messages is True or a.status == "creator") and a.user.is_bot is False:
                 try:
-                    await bot.send_message(chat_id=a.user.id, text=f"{chat_high_link}", parse_mode="HTML")
+                    await bot.send_message(chat_id=a.user.id, text=f"{chat_high_link}, {user1}, {user2}", parse_mode="HTML")
                 except:
                     pass
 
