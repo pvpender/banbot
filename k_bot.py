@@ -404,8 +404,6 @@ async def b(m):
 @dp.message_handler(commands=['text'])
 async def tx(msg: types.message):
     await msg.answer(msg.reply_to_message)
-    await msg.answer(len(msg.photo))
-
 
 
 @dp.message_handler(commands=['help'])
@@ -488,7 +486,7 @@ async def nothing(msg: types.message):
 @dp.throttled(delite, rate=any_rate)
 async def nothing(msg: types.message):
     global any_rate
-    any_rate = random.uniform(2.5, 20)
+    any_rate = random.uniform(2.5, 12)
 
 
 if __name__ == '__main__':
