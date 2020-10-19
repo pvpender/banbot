@@ -486,7 +486,7 @@ async def nothing(msg: types.message):
 @dp.throttled(delite, rate=any_rate)
 async def nothing(msg: types.message):
     global any_rate
-    any_rate = random.uniform(2.5, 12)
+    any_rate = random.uniform(2.5, 10)
 
 
 if __name__ == '__main__':
