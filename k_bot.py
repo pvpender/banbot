@@ -11,6 +11,7 @@ import logging
 import time
 import os
 import asyncio
+import random
 
 logging.basicConfig(level=logging.INFO)
 storage = MemoryStorage()
@@ -26,6 +27,9 @@ cursor = con.cursor()
 cursor.execute("CREATE TABLE users(chat_id integer, id integer, warn integer)")
 con.commit()
 
+
+message_rate = random.uniform(0.25, 0.6)
+any_rate = random.uniform(2.5, 20)
 
 class AdminFilter(BoundFilter):
     key = 'is_admin'
@@ -468,15 +472,22 @@ async def get_chat_id(msg: types.message):
 
 
 @dp.message_handler(is_forward=True)
-@dp.throttled(delite, rate=0.45)
-async def nothing(msg: types.message):
+async def nothing(msg: types.MediaGroup):
     pass
 
 
-@dp.message_handler(content_types=['sticker', 'animation', 'document'])
-@dp.throttled(delite, rate=2.5)
+@dp.message_handler(is_forward=True)
+@dp.throttled(delite, rate=message_rate)
 async def nothing(msg: types.message):
-    pass
+    global message_rate
+    message_rate = random.uniform(0.25, 0.6)
+
+
+@dp.message_handler(content_types=['photo', 'sticker', 'animation', 'document'])
+@dp.throttled(delite, rate=any_rate)
+async def nothing(msg: types.message):
+    global any_rate
+    any_rate = random.uniform(2.5, 20)
 
 
 if __name__ == '__main__':
