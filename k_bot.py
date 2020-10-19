@@ -475,7 +475,7 @@ async def get_chat_id(msg: types.message):
 @dp.throttled(delite, rate=message_rate)
 async def nothing(msg: types.message):
     global message_rate
-    message_rate = random.uniform(0.25, 0.6)
+    message_rate = random.uniform(0.45, 0.8)
 
 
 @dp.message_handler(content_types=['photo', 'sticker', 'animation', 'document'])
