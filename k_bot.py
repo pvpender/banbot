@@ -478,7 +478,12 @@ async def nothing(msg: types.message):
     message_rate = random.uniform(0.45, 0.8)
 
 
-@dp.message_handler(content_types=['photo', 'sticker', 'animation', 'document'])
+@dp.message_handler(content_types=['photo'])
+async def nothing(msg: types.message):
+    pass
+
+
+@dp.message_handler(content_types=['sticker', 'animation', 'document'])
 @dp.throttled(delite, rate=any_rate)
 async def nothing(msg: types.message):
     global any_rate
