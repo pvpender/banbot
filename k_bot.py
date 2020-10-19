@@ -404,6 +404,7 @@ async def b(m):
 @dp.message_handler(commands=['text'])
 async def tx(msg: types.message):
     await msg.answer(msg.reply_to_message)
+    await msg.answer(len(msg.photo))
 
 
 
