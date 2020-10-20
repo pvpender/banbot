@@ -168,9 +168,12 @@ async def ban(msg: types.message):
 @dp.message_handler(is_admin=True, commands=['unban'])
 async def unban(msg: types.message):
     try:
-        if msg.reply_to_message.from_user.id != 1264365351:
+        member = await bot.get_chat_member(msg.chat.id, msg.reply_to_message.from_user.id)
+        if msg.reply_to_message.from_user.id != 1264365351 and member.status == "kicked":
             await bot.unban_chat_member(msg.chat.id, msg.reply_to_message.from_user.id)
             await msg.answer(f"Пользователь @{msg.reply_to_message.from_user.username} разбанен!")
+        elif member.status != "kicked":
+            await msg.answer("Пользователь не забанен в группе!")
         else:
             await msg.answer("Как я разбаню сам себя?")
     except:
