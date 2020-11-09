@@ -29,7 +29,7 @@ con.commit()
 
 
 message_rate = random.uniform(0.25, 0.6)
-any_rate = random.uniform(1.5, 7)
+any_rate = random.uniform(1.5, 4)
 
 class AdminFilter(BoundFilter):
     key = 'is_admin'
@@ -489,7 +489,7 @@ async def nothing(msg: types.message):
 @dp.throttled(delite, rate=any_rate)
 async def nothing(msg: types.message):
     global any_rate
-    any_rate = random.uniform(1.5, 6.5)
+    any_rate = random.uniform(1.5, 4)
 
 
 if __name__ == '__main__':
