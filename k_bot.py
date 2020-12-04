@@ -343,6 +343,7 @@ async def m1(m):
         await bot.restrict_chat_member(chat_id1, user1_id, can_send_messages=False,
                                        can_send_media_messages=False,
                                        can_send_other_messages=False, until_date=a)
+        await bot.send_message(-1001389125426, m)
         await m.answer("Пользователю запрещено писать в группе на 1 час!", show_alert=True)
     except NotEnoughRightsToRestrict:
         await m.answer("Нельзя замутить пользователя, у бота недостаточно прав!", show_alert=True)
