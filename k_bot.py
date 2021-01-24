@@ -318,7 +318,7 @@ async def send_report(msg: types.message):
         ban_user = InlineKeyboardButton("Забанить нарушителя", callback_data="b")
         keyboard = InlineKeyboardMarkup(row_width=1).add(mute1, mute2, del_message, ban_user)
         for a in admins:
-            if (a.can_delete_messages is True or a.status == "creator") and a.user.is_bot is False:
+            if (((a.can_delete_messages is True) and (a.can_restrict_members is True)) or a.status == "creator") and a.user.is_bot is False:
                 try:
                     await bot.send_message(chat_id=a.user.id, text=f"""<b>Внимание! Report из </b>{chat_high_link}
 <b>Жалоба на:</b> {user1}
