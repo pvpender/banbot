@@ -111,6 +111,8 @@ async def hello(msg: types.message):
 Добро пожаловать!
 Пока ты не можешь писать в группе, но не волнуйся, просто нажми на кнопку и ты сможешь писать!""",
                          disable_web_page_preview=True, parse_mode='HTML', reply_markup=key_board)
+        await asyncio.sleep(2)
+        await bot.delete_message(msg.chat.id, msg.message_id)
     except NotEnoughRightsToRestrict:
         await msg.answer(f"""🗡Приветствую, {user1}️!
 Добро пожаловать!""", disable_web_page_preview=True, parse_mode='HTML')
@@ -127,7 +129,7 @@ async def accept(m):
         await bot.edit_message_text(f"""🗡Приветствую, {user1}️!
 Добро пожаловать!""", chat_id=m.message.chat.id, message_id=m.message.message_id, disable_web_page_preview=True,
                                     parse_mode='HTML')
-        await bot.edit_message_reply_markup(m.message.chat.id, m.message.message_id )
+        await bot.edit_message_reply_markup(m.message.chat.id, m.message.message_id)
     else:
         await m.answer("Ты не тот человек, для которого это сообщение!")
 
