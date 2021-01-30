@@ -118,10 +118,10 @@ async def hello(msg: types.message):
 
 @dp.callback_query_handler(lambda m: m.data == "accept")
 async def accept(m):
-    if m.message.user.id == m.message.entities[0].user.id:
-        await bot.restrict_chat_member(m.message.chat.id, m.message.user.id, can_send_messages=True,
+    if m.from_user.id == m.message.entities[0].user.id:
+        await bot.restrict_chat_member(m.message.chat.id, m.from_user.id, can_send_messages=True,
                                        can_send_media_messages=True,
-                                       can_send_other_messages=True)
+                                       can_send_other_messages=True, can_add_web_page_previews = True)
         await bot.delete_message(m.message.chat.id, m.message.message_id)
     else:
         pass
