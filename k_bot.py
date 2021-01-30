@@ -108,9 +108,10 @@ async def hello(msg: types.message):
         accept = InlineKeyboardButton("Я человек", callback_data="accept")
         key_board = InlineKeyboardMarkup(row_width=1).add(accept)
         await msg.answer(f"""🗡Приветствую, {user1}️!
-Добро пожаловать!
-Пока ты не можешь писать в группе, но не волнуйся, просто нажми на кнопку и ты сможешь писать!""",
-                         disable_web_page_preview=True, parse_mode='HTML', reply_markup=key_board)
+Добро пожаловать!""", disable_web_page_preview=True, parse_mode='HTML')
+        await msg.answer(f"""Пока ты не можешь писать в группе, но не стоит переживать! 
+Просто нажми на кнопку и ты сможешь писать!""", disable_web_page_preview=True, parse_mode='HTML',
+                         reply_markup=key_board)
     except NotEnoughRightsToRestrict:
         await msg.answer(f"""🗡Приветствую, {user1}️!
 Добро пожаловать!""", disable_web_page_preview=True, parse_mode='HTML')
@@ -124,7 +125,7 @@ async def accept(m):
                                        can_send_other_messages=True, can_add_web_page_previews = True)
         await bot.delete_message(m.message.chat.id, m.message.message_id)
     else:
-        pass
+        await m.answer("Ты не тот человек, для которого это сообщение!")
 
 
 async def delite(*args, **kwargs):
