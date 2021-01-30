@@ -112,7 +112,7 @@ async def hello(msg: types.message):
 Пока ты не можешь писать в группе, но не волнуйся, просто нажми на кнопку и ты сможешь писать!""",
                          disable_web_page_preview=True, parse_mode='HTML', reply_markup=key_board)
         await bot.delete_message(msg.chat.id, msg.message_id)
-        await asyncio.sleep(2)
+        await asyncio.sleep(60)
         await bot.delete_message(msg.chat.id, msg.message_id+1)
     except NotEnoughRightsToRestrict:
         await msg.answer(f"""🗡Приветствую, {user1}️!
