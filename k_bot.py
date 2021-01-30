@@ -121,8 +121,13 @@ async def accept(m):
     if m.from_user.id == m.message.entities[0].user.id:
         await bot.restrict_chat_member(m.message.chat.id, m.from_user.id, can_send_messages=True,
                                        can_send_media_messages=True,
-                                       can_send_other_messages=True, can_add_web_page_previews = True)
-        await bot.delete_message(m.message.chat.id, m.message.message_id)
+                                       can_send_other_messages=True, can_add_web_page_previews=True)
+        user = f"tg://user?id={m.message.entities[0].user.id}"
+        user1 = hlink(f"{m.message.entities[0].user.full_name}", user)
+        await bot.edit_message_text(f"""🗡Приветствую, {user1}️!
+Добро пожаловать!""", chat_id=m.message.chat.id, message_id=m.message.message_id, disable_web_page_preview=True,
+                                    parse_mode='HTML')
+        await bot.edit_message_reply_markup(m.message.chat.id, m.message.message_id )
     else:
         await m.answer("Ты не тот человек, для которого это сообщение!")
 
