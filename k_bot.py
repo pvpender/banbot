@@ -101,8 +101,30 @@ async def hello(msg: types.message):
 async def hello(msg: types.message):
     user = f"tg://user?id={msg.new_chat_members[0].id}"
     user1 = hlink(f"{msg.new_chat_members[0].full_name}", user)
-    await msg.answer(f"""🗡Приветствую, {user1}️!
+    try:
+        await bot.restrict_chat_member(msg.chat.id, msg.new_chat_members[0].id, can_send_messages=False,
+                                       can_send_media_messages=False,
+                                       can_send_other_messages=False)
+        accept = InlineKeyboardButton("Я человек", callback_data="accept")
+        key_board = InlineKeyboardMarkup(row_width=1).add(accept)
+        await msg.answer(f"""🗡Приветствую, {user1}️!
+Добро пожаловать!
+Пока ты не можешь писать в группе, но не волонуйся, просто нажми на кнопку и ты сможешь писать!""",
+                         disable_web_page_preview=True, parse_mode='HTML', reply_markup=key_board)
+    except NotEnoughRightsToRestrict:
+        await msg.answer(f"""🗡Приветствую, {user1}️!
 Добро пожаловать!""", disable_web_page_preview=True, parse_mode='HTML')
+
+
+@dp.callback_query_handler(lambda m: m.data == "accept")
+async def accept(m):
+    if m.message.user.id == m.message.entities[0].user.id:
+        await bot.restrict_chat_member(m.message.chat.id, m.message.user.id, can_send_messages=True,
+                                       can_send_media_messages=True,
+                                       can_send_other_messages=True)
+        await bot.delete_message(m.message.chat.id, m.message.message_id)
+    else:
+        pass
 
 
 async def delite(*args, **kwargs):
