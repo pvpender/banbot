@@ -101,27 +101,34 @@ async def hello(msg: types.message):
 async def hello(msg: types.message):
     user = f"tg://user?id={msg.new_chat_members[0].id}"
     user1 = hlink(f"{msg.new_chat_members[0].full_name}", user)
-    try:
-        await bot.restrict_chat_member(msg.chat.id, msg.new_chat_members[0].id, can_send_messages=False,
-                                       can_send_media_messages=False,
-                                       can_send_other_messages=False)
-        accept = InlineKeyboardButton("Я человек", callback_data="accept")
-        key_board = InlineKeyboardMarkup(row_width=1).add(accept)
+    mem = await bot.get_chat_member(msg.chat.id, msg.new_chat_members[0].id)
+    if mem.can_send_messages is False:
         await msg.answer(f"""🗡Приветствую, {user1}️!
+Добро пожаловать!""", disable_web_page_preview=True, parse_mode='HTML')
+        await asyncio.sleep(30)
+        await bot.delete_message(msg.chat.id, msg.message_id + 1)
+    else:
+        try:
+            await bot.restrict_chat_member(msg.chat.id, msg.new_chat_members[0].id, can_send_messages=False,
+                                           can_send_media_messages=False,
+                                           can_send_other_messages=False)
+            accept = InlineKeyboardButton("Я человек", callback_data="accept")
+            key_board = InlineKeyboardMarkup(row_width=1).add(accept)
+            await msg.answer(f"""🗡Приветствую, {user1}️!
 Добро пожаловать!
 Пока ты не можешь писать в группе, но не волнуйся, просто нажми на кнопку и ты сможешь писать!""",
-                         disable_web_page_preview=True, parse_mode='HTML', reply_markup=key_board)
-        chat_id = msg.chat.id
-        us_id = msg.new_chat_members[0].id
-        await bot.delete_message(msg.chat.id, msg.message_id)
-        await asyncio.sleep(30)
-        mem = await bot.get_chat_member(chat_id, us_id)
-        if mem.can_send_messages is False:
-            await bot.kick_chat_member(chat_id, us_id)
-            await bot.unban_chat_member(chat_id, us_id)
-        await bot.delete_message(msg.chat.id, msg.message_id+1)
-    except NotEnoughRightsToRestrict:
-        await msg.answer(f"""🗡Приветствую, {user1}️!
+                             disable_web_page_preview=True, parse_mode='HTML', reply_markup=key_board)
+            chat_id = msg.chat.id
+            us_id = msg.new_chat_members[0].id
+            await bot.delete_message(msg.chat.id, msg.message_id)
+            await asyncio.sleep(30)
+            mem = await bot.get_chat_member(chat_id, us_id)
+            if mem.can_send_messages is False:
+                await bot.kick_chat_member(chat_id, us_id)
+                await bot.unban_chat_member(chat_id, us_id)
+            await bot.delete_message(msg.chat.id, msg.message_id+1)
+        except NotEnoughRightsToRestrict:
+            await msg.answer(f"""🗡Приветствую, {user1}️!
 Добро пожаловать!""", disable_web_page_preview=True, parse_mode='HTML')
 
 
