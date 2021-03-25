@@ -465,7 +465,7 @@ async def b(m):
 @dp.message_handler(commands=['text'])
 async def tx(msg: types.message):
     await msg.answer(msg.reply_to_message)
-    await msg.answer(f"<br>hi</br>", disable_web_page_preview=True, parse_mode='HTML')
+    await msg.answer(f"<b>hi</b>", disable_web_page_preview=True, parse_mode='HTML')
 
 
 @dp.message_handler(commands=['help'])
