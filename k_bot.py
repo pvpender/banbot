@@ -108,7 +108,7 @@ async def hello(msg: types.message):
         await msg.answer(f"""🗡Приветствую, {user1}️!
 Добро пожаловать!""", disable_web_page_preview=True, parse_mode='HTML')
         if msg.chat.id == -1001279094011:
-            rule_msg = await msg.answer(f"<b>Вступая в чат, вы автоматически соглашаетесь с</b> {rule_link}<b>!</b>**",
+            rule_msg = await msg.answer(f"<b>Вступая в чат, вы автоматически соглашаетесь с</b> {rule_link}<b>!</b>",
                                         disable_web_page_preview=True, parse_mode='HTML')
         await asyncio.sleep(30)
         await bot.delete_message(msg.chat.id, msg.message_id + 1)
@@ -127,7 +127,7 @@ async def hello(msg: types.message):
                              disable_web_page_preview=True, parse_mode='HTML', reply_markup=key_board)
             if msg.chat.id == -1001279094011:
                 rule_msg = await msg.answer(f"<b>Вступая в чат, вы автоматически соглашаетесь с</b> "
-                                            f"{rule_link}<b>!</b>**",
+                                            f"{rule_link}<b>!</b>",
                                             disable_web_page_preview=True, parse_mode='HTML')
             chat_id = msg.chat.id
             us_id = msg.new_chat_members[0].id
