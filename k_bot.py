@@ -275,7 +275,8 @@ async def mute(msg: types.message):
                                                can_send_messages=False, can_send_media_messages=False,
                                                can_send_other_messages=False)
                 await msg.answer(
-                    f"Пользователю @{msg.reply_to_message.from_user.username} запрещено писать в группе на {int(b)} минут!")
+                    f"Пользователю @{msg.reply_to_message.from_user.username} запрещено писать в группе на {int(b)} "
+                    f"минут!")
         except:
             if msg.reply_to_message.from_user.id != 898287979:
                 await bot.restrict_chat_member(msg.chat.id, msg.reply_to_message.from_user.id, can_send_messages=False,
