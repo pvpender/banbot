@@ -28,8 +28,8 @@ cursor.execute("CREATE TABLE users(chat_id integer, id integer, warn integer)")
 con.commit()
 
 
-message_rate = random.uniform(0.25, 0.6)
-any_rate = random.uniform(1.5, 4.5)
+message_rate = random.uniform(0.15, 0.35)
+any_rate = random.uniform(0.25, 0.4)
 
 class AdminFilter(BoundFilter):
     key = 'is_admin'
