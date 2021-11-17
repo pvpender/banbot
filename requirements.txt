@@ -1,4 +1,4 @@
-aiogram==2.8
+aiogram==2.16
 aiohttp==3.6.2
 appdirs==1.4.3
 async-timeout==3.0.1
