@@ -219,7 +219,7 @@ async def ban(msg: types.message):
     """)
 
 
-@dp.message_handler(commands=['ban'])
+@dp.message_handler(is_admin = False, commands=['ban'])
 @dp.throttled(delite, rate=2)
 async def ban(msg: types.message):
     await msg.answer('У тебя нет прав банить пользователей!')
@@ -245,7 +245,7 @@ async def kick(msg: types.message):
     """)
 
 
-@dp.message_handler(commands=['kick'])
+@dp.message_handler(is_admin = False, commands=['kick'])
 @dp.throttled(delite, rate=2)
 async def kick(msg: types.message):
     await msg.answer('У тебя нет прав кикать пользователей!')
