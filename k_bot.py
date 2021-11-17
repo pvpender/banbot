@@ -225,7 +225,7 @@ async def ban(msg: types.message):
     await msg.answer('У тебя нет прав банить пользователей!')
 
 
-@dp.message_handler(is_admin=True, commands=['ban'])
+@dp.message_handler(is_admin=True, commands=['kick'])
 async def ban(msg: types.message):
     try:
         if msg.reply_to_message.from_user.id != 898287979:
