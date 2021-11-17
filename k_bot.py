@@ -29,7 +29,7 @@ con.commit()
 
 
 message_rate = random.uniform(0.25, 0.6)
-any_rate = random.uniform(1.5, 4)
+any_rate = random.uniform(1.5, 4.5)
 
 class AdminFilter(BoundFilter):
     key = 'is_admin'
