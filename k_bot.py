@@ -169,7 +169,7 @@ async def delite(*args, **kwargs):
     if warns is None:
         cursor.execute("INSERT INTO users(chat_id, id, warn) VALUES(?,?,1)", (msg.chat.id, msg.from_user.id))
     else:
-        if warns[0] < 4:
+        if warns[0] < 5:
             cursor.execute("UPDATE users SET warn = ? WHERE chat_id = ? AND id = ?",
                            (warns[0] + 1, msg.chat.id, msg.from_user.id))
             await asyncio.sleep(30)
@@ -537,7 +537,7 @@ async def get_chat_id(msg: types.message):
 @dp.throttled(delite, rate=message_rate)
 async def nothing(msg: types.message):
     global message_rate
-    message_rate = random.uniform(0.45, 0.8)
+    message_rate = random.uniform(0.15, 0.35)
 
 
 @dp.message_handler(content_types=['photo'])
@@ -549,7 +549,7 @@ async def nothing(msg: types.message):
 @dp.throttled(delite, rate=any_rate)
 async def nothing(msg: types.message):
     global any_rate
-    any_rate = random.uniform(1.5, 4)
+    any_rate = random.uniform(0.25, 0.4)
 
 
 if __name__ == '__main__':
