@@ -225,6 +225,32 @@ async def ban(msg: types.message):
     await msg.answer('У тебя нет прав банить пользователей!')
 
 
+@dp.message_handler(is_admin=True, commands=['ban'])
+async def ban(msg: types.message):
+    try:
+        if msg.reply_to_message.from_user.id != 898287979:
+            await bot.kick_chat_member(msg.chat.id, msg.reply_to_message.from_user.id)
+            await bot.unban_chat_member(msg.chat.id, msg.reply_to_message.from_user.id)
+            await msg.answer(
+                f"Пользователь @{msg.reply_to_message.from_user.username} выгнан из группы!")
+    except:
+        await msg.answer('Ответьте на сообщение пользователя, которого хотите кикнуть')
+
+
+@dp.message_handler(lambda m: m.chat.type == 'private', commands=['kick'])
+async def kick(msg: types.message):
+    await msg.answer("""Эту команду нужно использовать в супергруппе!
+Для этого добавте этого бота в вашу группу и дайте ему полные права администратора
+Помните, что пользоваться этой командой могут только администраторы, с возможностью банить пользователя, и сам создатель группы!
+    """)
+
+
+@dp.message_handler(commands=['kick'])
+@dp.throttled(delite, rate=2)
+async def kick(msg: types.message):
+    await msg.answer('У тебя нет прав кикать пользователей!')
+
+
 @dp.message_handler(is_admin=True, commands=['unban'])
 async def unban(msg: types.message):
     try:
