@@ -26,7 +26,7 @@ pipenv==2021.11.15
 platformdirs==2.4.0
 Pygments==2.10.0
 pyowm==3.2.0
-pyparsing==3.0.6
+pyparsing==2.0.2
 PySocks==1.7.1
 pyTelegramBotAPI==4.2.0
 python-telegram-bot==13.8.1
