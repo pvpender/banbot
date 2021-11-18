@@ -39,7 +39,7 @@ class AdminFilter(BoundFilter):
 
     async def check(self, message: types.Message):
         member = await bot.get_chat_member(message.chat.id, message.from_user.id)
-        return (member.can_restrict_members == self.is_admin) or (member.status == 'creator')
+        return (member.is_chat_admin()) or (member.is_chat_creator())
 
 
 dp.filters_factory.bind(AdminFilter)
@@ -104,7 +104,8 @@ async def hello(msg: types.message):
     rule_link = hlink("правилами", "https://t.me/gotbs/559")
     mem = await bot.get_chat_member(msg.chat.id, msg.new_chat_members[0].id)
     rule_msg = 0
-    if mem.can_send_messages is False:
+    print(mem.status)
+    if mem.status == "restricted":
         await msg.answer(f"""🗡Приветствую, {user1}️!
 Добро пожаловать!""", disable_web_page_preview=True, parse_mode='HTML')
         if msg.chat.id == -1001279094011:
@@ -119,6 +120,7 @@ async def hello(msg: types.message):
             await bot.restrict_chat_member(msg.chat.id, msg.new_chat_members[0].id, can_send_messages=False,
                                            can_send_media_messages=False,
                                            can_send_other_messages=False)
+            print("da")
             accept = InlineKeyboardButton("Я человек", callback_data="accept")
             key_board = InlineKeyboardMarkup(row_width=1).add(accept)
             await msg.answer(f"""🗡Приветствую, {user1}️!
@@ -134,7 +136,7 @@ async def hello(msg: types.message):
             await bot.delete_message(msg.chat.id, msg.message_id)
             await asyncio.sleep(30)
             mem = await bot.get_chat_member(chat_id, us_id)
-            if mem.can_send_messages is False:
+            if mem.status == "restricted":
                 await bot.kick_chat_member(chat_id, us_id)
                 await bot.unban_chat_member(chat_id, us_id)
             await bot.delete_message(msg.chat.id, msg.message_id+1)
@@ -183,6 +185,7 @@ async def delite(*args, **kwargs):
                                            can_send_other_messages=False)
 
 
+
 @dp.message_handler(is_admin=True, commands=['ban'])
 async def ban(msg: types.message):
     try:
@@ -219,7 +222,7 @@ async def ban(msg: types.message):
     """)
 
 
-@dp.message_handler(is_admin = False, commands=['ban'])
+@dp.message_handler(commands=['ban'])
 @dp.throttled(delite, rate=2)
 async def ban(msg: types.message):
     await msg.answer('У тебя нет прав банить пользователей!')
@@ -237,6 +240,7 @@ async def ban(msg: types.message):
         await msg.answer('Ответьте на сообщение пользователя, которого хотите кикнуть')
 
 
+
 @dp.message_handler(lambda m: m.chat.type == 'private', commands=['kick'])
 async def kick(msg: types.message):
     await msg.answer("""Эту команду нужно использовать в супергруппе!
@@ -245,7 +249,7 @@ async def kick(msg: types.message):
     """)
 
 
-@dp.message_handler(is_admin = False, commands=['kick'])
+@dp.message_handler(commands=['kick'])
 @dp.throttled(delite, rate=2)
 async def kick(msg: types.message):
     await msg.answer('У тебя нет прав кикать пользователей!')
@@ -266,6 +270,7 @@ async def unban(msg: types.message):
         await msg.answer('Ответьте на сообщение пользователя, которого хотите разбанить')
 
 
+
 @dp.message_handler(lambda m: m.chat.type == 'private', commands=['unban'])
 async def ban(msg: types.message):
     await msg.answer("""Эту команду нужно использовать в супергруппе!
@@ -278,6 +283,7 @@ async def ban(msg: types.message):
 @dp.throttled(delite, rate=2)
 async def ban(msg: types.message):
     await msg.answer('У тебя нет прав разбанивать пользователей!')
+
 
 
 @dp.message_handler(is_admin=True, commands=['mute'])
@@ -314,6 +320,7 @@ async def mute(msg: types.message):
         await msg.answer('Ответьте на сообщение пользователя, которого хотите замутить')
 
 
+
 @dp.message_handler(lambda m: m.chat.type == 'private', commands=['mute'])
 async def ban(msg: types.message):
     await msg.answer("""Эту команду нужно использовать в супергруппе!
@@ -347,10 +354,12 @@ async def ban(msg: types.message):
     """)
 
 
+
 @dp.message_handler(commands=['unmute'])
 @dp.throttled(delite, rate=2)
 async def ban(msg: types.message):
     await msg.answer('У тебя нет прав размучивать пользователей!')
+
 
 
 @dp.message_handler(is_chat_idd=-1001490191998, commands=['report'])
@@ -580,4 +589,4 @@ async def nothing(msg: types.message):
 
 
 if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates=True)
+    executor.start_polling(dp, skip_updates=True, allowed_updates=types.AllowedUpdates.all())
