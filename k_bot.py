@@ -39,7 +39,7 @@ class AdminFilter(BoundFilter):
 
     async def check(self, message: types.Message):
         member = await bot.get_chat_member(message.chat.id, message.from_user.id)
-        return (member.is_chat_admin()) or (member.is_chat_creator())
+        return (member.can_restrict_members is True) or (member.is_chat_creator())
 
 
 dp.filters_factory.bind(AdminFilter)
