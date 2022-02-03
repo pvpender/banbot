@@ -101,7 +101,7 @@ async def hello(msg: types.message):
 async def hello(msg: types.message):
     user = f"tg://user?id={msg.new_chat_members[0].id}"
     user1 = hlink(f"{msg.new_chat_members[0].full_name}", user)
-    rule_link = hlink("правилами", "https://t.me/gotbs/559")
+    rule_link = hlink("правилами", "https://t.me/got_rules")
     mem = await bot.get_chat_member(msg.chat.id, msg.new_chat_members[0].id)
     rule_msg = 0
     print(mem.status)
